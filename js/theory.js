@@ -529,1104 +529,1154 @@ function getAttendanceElective(attn) {
 
 function generateTable() {
 
-  var miniday = new Array();
-  var minorday = new Array();
-  var majorday = new Array();
+  if ($('.finaltable').length > 0) {
+    $('#tablegenerated').css('display', 'block');
+    $('.finaltable').css('display', 'table');
+    $('.datatable').css('display', 'table');
+  } else {
 
-  var tgen = document.getElementById("tablegenerated");
-  var a = parseInt(document.getElementById("inputTheoryCond").value);
-  // var b = parseInt(document.getElementById("inputElectiveCond").value);
-  var c = parseInt(document.getElementById("inputPracsCond").value);
-  var subjects = document.getElementsByClassName('subjects');
-  var practs = document.getElementsByClassName('practs');
-  var name = document.createElement('p');
+    var miniday = new Array();
+    var minorday = new Array();
+    var majorday = new Array();
 
-  var daySub = document.getElementsByClassName('daysSub');
-  console.log(daySub);
-  var subMap = new Map();
-  var subjectList = new Map();
-  var counter = 1;
-  var cr = 1;
-  var subSet = new Set();
-  var subCountMap = new Map();
-  for (var i = 0; i < a; i++) {
-    var subjectname = subjects[i];
-    subSet.add(subjectname.value);
-    var daySubject = daySub[i];
-    console.log(daySubject.value);
+    var tgen = document.getElementById("tablegenerated");
+    var a = 0;
+    a = parseInt(document.getElementById("inputTheoryCond").value);
+    // var b = parseInt(document.getElementById("inputElectiveCond").value);
+    var c = 0;
+    c = parseInt(document.getElementById("inputPracsCond").value);
+    var subjects = document.getElementsByClassName('subjects');
+    var practs = document.getElementsByClassName('practs');
+    var name = document.createElement('p');
 
-    //subject map for number of times a subject has occured
-    var subctr = 0;
-    if (!subCountMap.get(subjectname.value)) {
-      subctr = 1;
-      subCountMap.set(subjectname.value, subctr);
-    } else {
-      subctr = subCountMap.get(subjectname.value);
-      subctr += 1;
-      subCountMap.set(subjectname.value, subctr);
+    var daySub = document.getElementsByClassName('daysSub');
+    console.log(daySub);
+    var subMap = new Map();
+    var subjectList = new Map();
+    var counter = 1;
+    var cr = 1;
+    var subSet = new Set();
+    var subCountMap = new Map();
+    for (var i = 0; i < a; i++) {
+      var subjectname = subjects[i];
+      subSet.add(subjectname.value);
+      var daySubject = daySub[i];
+      console.log(daySubject.value);
+
+      //subject map for number of times a subject has occured
+      var subctr = 0;
+      if (!subCountMap.get(subjectname.value)) {
+        subctr = 1;
+        subCountMap.set(subjectname.value, subctr);
+      } else {
+        subctr = subCountMap.get(subjectname.value);
+        subctr += 1;
+        subCountMap.set(subjectname.value, subctr);
+      }
+
+      if (!subMap.get(subjectname.value + daySubject.value)) {
+        counter = 1;
+        subMap.set(subjectname.value + daySubject.value, counter);
+        subjectList.set(subjectname.value, parseFloat($("#20" + (cr - 1)).text()));
+        cr++;
+      } else {
+        counter = subMap.get(subjectname.value + daySubject.value);
+        counter += 1;
+        console.log("c is " + counter);
+        subMap.set(subjectname.value + daySubject.value, counter);
+        subjectList.set(subjectname.value, parseFloat($("#20" + (cr - 1)).text()));
+        // subMap.set(subjectname.value,subMap.get(subjectname.value).charAt(0)+subMap.get(subjectname.value).charAt(1)+subMap.get(subjectname.value).charAt(2)+(c));
+        // console.log("abc is "+subMap.get(subjectname.value).charAt(0)+subMap.get(subjectname.value).charAt(1)+subMap.get(subjectname.value).charAt(2)+(c));
+      }
+    }
+    console.log("subset size is " + subSet.size);
+    console.log(subSet);
+    console.log("submap is ");
+    console.log(subMap);
+
+    console.log("subject count map is")
+    console.log(subCountMap);
+
+    // var dayElect = document.getElementsByClassName('daysElect');
+    // var electSet = new Set();
+    // var electMap = new Map();
+    // var electCountMap = new Map();
+    // var electiveList = new Map();
+    // for (var i = 0; i < b; i++) {
+    //   var electsubjects = document.getElementsByClassName(1000 + i);
+    //   var electivename = electsubjects[0];
+    //   var dayElective = dayElect[i];
+    //   electSet.add(electivename.value);
+    //   console.log(electivename.value);
+    //
+    //   //elective map for number of times a subject has occured
+    //   var subctr = 0;
+    //   if (!electCountMap.get(electivename.value)) {
+    //     subctr = 1;
+    //     electCountMap.set(electivename.value, subctr);
+    //   } else {
+    //     subctr = electCountMap.get(electivename.value);
+    //     subctr += 1;
+    //     electCountMap.set(electivename.value, subctr);
+    //   }
+    //
+    //
+    //
+    //   if (!electMap.get(electivename.value + dayElective.value)) {
+    //     counter = 1;
+    //     electMap.set(electivename.value + dayElective.value, counter);
+    //     electiveList.set(electivename.value, counter);
+    //   } else {
+    //     console.log(counter);
+    //     counter = electMap.get(electivename.value + dayElective.value);
+    //     counter += 1;
+    //     electMap.set(electivename.value + dayElective.value, counter);
+    //     electiveList.set(electivename.value, counter);
+    //   }
+    //   // if(!electMap.get(electivename.value))
+    //   // {
+    //   //    electMap.set(electivename.value,1);
+    //   // }
+    //   // else
+    //   // {
+    //   //    electMap.set(electivename.value,electMap.get(electivename.value)+1);
+    //   // }
+    // }
+    // console.log("electMap is ");
+    // console.log(electMap);
+    // console.log(electSet);
+    //
+    // console.log("elective lis is ");
+    // console.log(electiveList);
+
+    var dayPract = document.getElementsByClassName('daysPract');
+    var practSet = new Set();
+    var practMap = new Map();
+    var practCountMap = new Map();
+    var practicalList = new Map();
+    for (var i = 0; i < c; i++) {
+      var subjectname = practs[i];
+      practSet.add(subjectname.value);
+      var dayPractical = dayPract[i];
+
+      //practical map for number of times a subject has occured
+      var subctr = 0;
+      if (!practCountMap.get(subjectname.value)) {
+        subctr = 1;
+        practCountMap.set(subjectname.value, subctr);
+      } else {
+        subctr = practCountMap.get(subjectname.value);
+        subctr += 1;
+        practCountMap.set(subjectname.value, subctr);
+      }
+
+
+      if (!practMap.get(subjectname.value + dayPractical.value)) {
+        counter = 1;
+        practMap.set(subjectname.value + dayPractical.value, counter);
+        practicalList.set(subjectname.value, counter);
+      } else {
+        counter = practMap.get(subjectname.value + dayPractical.value);
+        counter += 1;
+        practMap.set(subjectname.value + dayPractical.value, counter);
+        practicalList.set(subjectname.value, counter);
+      }
+      console.log("practmap is ");
+      console.log(practMap);
+      // if(!practMap[subjectname.value])
+      //    practMap.set(subjectname.value,1);
+      // else
+      //    practMap.set  (subjectname.value,subMap.get(subjectname.value)+1);
     }
 
-    if (!subMap.get(subjectname.value + daySubject.value)) {
-      counter = 1;
-      subMap.set(subjectname.value + daySubject.value, counter);
-      subjectList.set(subjectname.value, parseFloat($("#20" + (cr - 1)).text()));
-      cr++;
-    } else {
-      counter = subMap.get(subjectname.value + daySubject.value);
-      counter += 1;
-      console.log("c is " + counter);
-      subMap.set(subjectname.value + daySubject.value, counter);
-      subjectList.set(subjectname.value, parseFloat($("#20" + (cr - 1)).text()));
-      // subMap.set(subjectname.value,subMap.get(subjectname.value).charAt(0)+subMap.get(subjectname.value).charAt(1)+subMap.get(subjectname.value).charAt(2)+(c));
-      // console.log("abc is "+subMap.get(subjectname.value).charAt(0)+subMap.get(subjectname.value).charAt(1)+subMap.get(subjectname.value).charAt(2)+(c));
-    }
-  }
-  console.log("subset size is " + subSet.size);
-  console.log(subSet);
-  console.log("submap is ");
-  console.log(subMap);
+    // console.log("practs: : "+practs);
+    // console.log("name: "+name);
+    // console.log("a: "+a);
+    // console.log("b: "+b);
+    // console.log("c: "+c);
+    // console.log("subjects: "+subjects);
 
-  console.log("subject count map is")
-  console.log(subCountMap);
+    // console.log(electsubjects);
+    name.innerHTML = "<h2><b>Faculty Table</b></h2>";
+    name.setAttribute('class', 'text-center');
+    tgen.appendChild(name);
 
-  // var dayElect = document.getElementsByClassName('daysElect');
-  // var electSet = new Set();
-  // var electMap = new Map();
-  // var electCountMap = new Map();
-  // var electiveList = new Map();
-  // for (var i = 0; i < b; i++) {
-  //   var electsubjects = document.getElementsByClassName(1000 + i);
-  //   var electivename = electsubjects[0];
-  //   var dayElective = dayElect[i];
-  //   electSet.add(electivename.value);
-  //   console.log(electivename.value);
-  //
-  //   //elective map for number of times a subject has occured
-  //   var subctr = 0;
-  //   if (!electCountMap.get(electivename.value)) {
-  //     subctr = 1;
-  //     electCountMap.set(electivename.value, subctr);
-  //   } else {
-  //     subctr = electCountMap.get(electivename.value);
-  //     subctr += 1;
-  //     electCountMap.set(electivename.value, subctr);
-  //   }
-  //
-  //
-  //
-  //   if (!electMap.get(electivename.value + dayElective.value)) {
-  //     counter = 1;
-  //     electMap.set(electivename.value + dayElective.value, counter);
-  //     electiveList.set(electivename.value, counter);
-  //   } else {
-  //     console.log(counter);
-  //     counter = electMap.get(electivename.value + dayElective.value);
-  //     counter += 1;
-  //     electMap.set(electivename.value + dayElective.value, counter);
-  //     electiveList.set(electivename.value, counter);
-  //   }
-  //   // if(!electMap.get(electivename.value))
-  //   // {
-  //   //    electMap.set(electivename.value,1);
-  //   // }
-  //   // else
-  //   // {
-  //   //    electMap.set(electivename.value,electMap.get(electivename.value)+1);
-  //   // }
-  // }
-  // console.log("electMap is ");
-  // console.log(electMap);
-  // console.log(electSet);
-  //
-  // console.log("elective lis is ");
-  // console.log(electiveList);
+    // ==========================================================================================================REMOVE
+    // a = 2;
+    // b = 1;
+    // c = 3;
+    // var subjects = ["AM-IV", "SPCC"];
+    // var practs = ["AM", "AM", "AM"];
 
-  var dayPract = document.getElementsByClassName('daysPract');
-  var practSet = new Set();
-  var practMap = new Map();
-  var practCountMap = new Map();
-  var practicalList = new Map();
-  for (var i = 0; i < c; i++) {
-    var subjectname = practs[i];
-    practSet.add(subjectname.value);
-    var dayPractical = dayPract[i];
-
-    //practical map for number of times a subject has occured
-    var subctr = 0;
-    if (!practCountMap.get(subjectname.value)) {
-      subctr = 1;
-      practCountMap.set(subjectname.value, subctr);
-    } else {
-      subctr = practCountMap.get(subjectname.value);
-      subctr += 1;
-      practCountMap.set(subjectname.value, subctr);
-    }
-
-
-    if (!practMap.get(subjectname.value + dayPractical.value)) {
-      counter = 1;
-      practMap.set(subjectname.value + dayPractical.value, counter);
-      practicalList.set(subjectname.value, counter);
-    } else {
-      counter = practMap.get(subjectname.value + dayPractical.value);
-      counter += 1;
-      practMap.set(subjectname.value + dayPractical.value, counter);
-      practicalList.set(subjectname.value, counter);
-    }
-    console.log("practmap is ");
-    console.log(practMap);
-    // if(!practMap[subjectname.value])
-    //    practMap.set(subjectname.value,1);
-    // else
-    //    practMap.set  (subjectname.value,subMap.get(subjectname.value)+1);
-  }
-
-  // console.log("practs: : "+practs);
-  // console.log("name: "+name);
-  // console.log("a: "+a);
-  // console.log("b: "+b);
-  // console.log("c: "+c);
-  // console.log("subjects: "+subjects);
-
-  // console.log(electsubjects);
-  name.innerHTML = "<h2><b>Faculty Table</b></h2>";
-  name.setAttribute('class', 'text-center');
-  tgen.appendChild(name);
-
-  // ==========================================================================================================REMOVE
-  // a = 2;
-  // b = 1;
-  // c = 3;
-  // var subjects = ["AM-IV", "SPCC"];
-  // var practs = ["AM", "AM", "AM"];
-
-  var table = document.createElement('table');
-  table.setAttribute('class', 'table table-bordered table-inverse');
-  var tr = document.createElement('tr');
-  var td1 = document.createElement('td');
-  td1.innerHTML = "<b>Day</b>";
-  td1.setAttribute('rowspan', '2');
-  var td2 = document.createElement('td');
-  td2.innerHTML = "<b>Date</b>";
-  td2.setAttribute('rowspan', '2');
-  var subflag = 0; //if number of different subjects is less than 1
-  if (subSet.size == 1)
-    subflag = 1;
-  if (subSet.size == 0)
-    subflag = 2;
-  var td3 = document.createElement('td');
-  td3.innerHTML = "<b>Theory (X)</b>";
-  td3.setAttribute('class', 'text-center');
-  td3.setAttribute('colspan', subSet.size + subflag);
-
-  var practflag = 0;
-  if (practSet.size == 1)
-    practflag = 1;
-  if (practSet.size == 0)
-    practflag = 2;
-  var td4 = document.createElement('td');
-  td4.innerHTML = "<b>Practical/Tutorial (Y)</b>";
-  td4.setAttribute('colspan', practSet.size + practflag);
-  td4.setAttribute('class', 'text-center');
-  var td5 = document.createElement('td');
-  td5.innerHTML = "<b>Project (Z)</b>";
-  td5.setAttribute('colspan', '3');
-  td5.setAttribute('class', 'text-center');
-  var td6 = document.createElement('td');
-  td6.innerHTML = "<b>Remark</b>";
-  td6.setAttribute('rowspan', '2');
-  tr.appendChild(td1);
-  tr.appendChild(td2);
-  tr.appendChild(td3);
-  tr.appendChild(td4);
-  tr.appendChild(td5);
-  tr.appendChild(td6);
-  table.appendChild(tr);
-  tgen.appendChild(table);
-
-  var tr = document.createElement('tr');
-  tr.setAttribute('class', 'bg-primary');
-
-  for (let key of subSet.keys()) {
-    var td = document.createElement('td');
-    td.innerHTML = key;
-    tr.appendChild(td);
-    console.log("subname is " + key);
-  }
-  console.log(subMap);
-
-  for (var abc = 0; abc < subflag; abc++) {
-    var td = document.createElement('td');
-    td.innerHTML = "subject";
-    tr.appendChild(td);
-  }
-
-  for (let key of practSet.keys()) {
-    var td = document.createElement('td');
-    td.innerHTML = key;
-    tr.appendChild(td);
-    console.log("practname is " + key);
-  }
-
-  for (var abc = 0; abc < practflag; abc++) {
-    var td = document.createElement('td');
-    td.innerHTML = "practical";
-    tr.appendChild(td);
-    console.log("abcdefghijklmnopqrstuvwxyz" + abc);
-  }
-
-  console.log("subflag=" + subflag);
-  console.log("practflag=" + practflag);
-
-
-  var td = document.createElement('td');
-  td.innerHTML = "mini";
-  tr.appendChild(td);
-  var td = document.createElement('td');
-  td.innerHTML = "minor";
-  tr.appendChild(td);
-  var td = document.createElement('td');
-  td.innerHTML = "major";
-  tr.appendChild(td);
-  table.appendChild(tr);
-
-  var background = ['bg-success', 'bg-danger', 'bg-warning', 'bg-info', 'bg-primary', 'bg-success']
-  var days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
-  for (var i = 0; i < 6; i++) {
+    var table = document.createElement('table');
+    table.setAttribute('class', 'table table-bordered table-inverse finaltable');
     var tr = document.createElement('tr');
-    tr.setAttribute('class', background[i]);
+    var td1 = document.createElement('td');
+    td1.innerHTML = "<b>Day</b>";
+    td1.setAttribute('rowspan', '2');
+    var td2 = document.createElement('td');
+    td2.innerHTML = "<b>Date</b>";
+    td2.setAttribute('rowspan', '2');
+    var subflag = 0; //if number of different subjects is less than 1
+    if (subSet.size == 1)
+      subflag = 1;
+    if (subSet.size == 0)
+      subflag = 2;
+    var td3 = document.createElement('td');
+    td3.innerHTML = "<b>Theory (X)</b>";
+    td3.setAttribute('class', 'text-center');
+    td3.setAttribute('colspan', subSet.size + subflag);
 
-    var td = document.createElement('td');
-    td.innerHTML = days[i];
-    tr.appendChild(td);
-    var td = document.createElement('td');
-    td.innerHTML = "8 jan";
-    tr.appendChild(td);
-    //for theory Lectures
+    var practflag = 0;
+    if (practSet.size == 1)
+      practflag = 1;
+    if (practSet.size == 0)
+      practflag = 2;
+    var td4 = document.createElement('td');
+    td4.innerHTML = "<b>Practical/Tutorial (Y)</b>";
+    td4.setAttribute('colspan', practSet.size + practflag);
+    td4.setAttribute('class', 'text-center');
+    var td5 = document.createElement('td');
+    td5.innerHTML = "<b>Project (Z)</b>";
+    td5.setAttribute('colspan', '3');
+    td5.setAttribute('class', 'text-center');
+    var td6 = document.createElement('td');
+    td6.innerHTML = "<b>Remark</b>";
+    td6.setAttribute('rowspan', '2');
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    tr.appendChild(td4);
+    tr.appendChild(td5);
+    tr.appendChild(td6);
+    table.appendChild(tr);
+    tgen.appendChild(table);
+
+    var tr = document.createElement('tr');
+    tr.setAttribute('class', 'bg-primary');
 
     for (let key of subSet.keys()) {
       var td = document.createElement('td');
-      td.setAttribute('id', key + days[i]);
-
-      for (var keyVal of subMap.keys()) {
-        if (keyVal == td.id) {
-          td.innerHTML = subMap.get(keyVal);
-        }
-      }
-
+      td.innerHTML = key;
       tr.appendChild(td);
+      console.log("subname is " + key);
     }
+    console.log(subMap);
 
     for (var abc = 0; abc < subflag; abc++) {
       var td = document.createElement('td');
-      td.innerHTML = "";
+      td.innerHTML = "subject";
       tr.appendChild(td);
     }
 
     for (let key of practSet.keys()) {
       var td = document.createElement('td');
-      td.setAttribute('id', key + days[i]);
-      for (var keyVal of practMap.keys()) {
-        if (keyVal == td.id) {
-          td.innerHTML = practMap.get(keyVal);
-        }
-      }
-      // td.innerHTML=key+days[i];
+      td.innerHTML = key;
       tr.appendChild(td);
+      console.log("practname is " + key);
     }
 
     for (var abc = 0; abc < practflag; abc++) {
       var td = document.createElement('td');
-      td.innerHTML = "";
+      td.innerHTML = "practical";
       tr.appendChild(td);
+      console.log("abcdefghijklmnopqrstuvwxyz" + abc);
     }
 
+    console.log("subflag=" + subflag);
+    console.log("practflag=" + practflag);
+
 
     var td = document.createElement('td');
-    td.setAttribute('id', "mini" + days[i])
-    // td.innerHTML="small";
+    td.innerHTML = "mini";
     tr.appendChild(td);
     var td = document.createElement('td');
-    td.setAttribute('id', "minor" + days[i])
-    // td.innerHTML="medium";
+    td.innerHTML = "minor";
     tr.appendChild(td);
     var td = document.createElement('td');
-    td.setAttribute('id', "major" + days[i])
-    // td.innerHTML="large";
-    tr.appendChild(td);
-
-
-
-    var td = document.createElement('td');
-    // td.innerHTML="remark";
+    td.innerHTML = "major";
     tr.appendChild(td);
     table.appendChild(tr);
 
-  }
+    var background = ['bg-success', 'bg-danger', 'bg-warning', 'bg-info', 'bg-primary', 'bg-success']
+    var days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+    for (var i = 0; i < 6; i++) {
+      var tr = document.createElement('tr');
+      tr.setAttribute('class', background[i]);
 
-  //for project lectures
+      var td = document.createElement('td');
+      td.innerHTML = days[i];
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.innerHTML = "8 jan";
+      tr.appendChild(td);
+      //for theory Lectures
 
-  var numberofMini = 0;
-  var numberofMinor = 0;
-  var numberofMajor = 0;
-  if (document.getElementById("numberofmini")) {
-    numberofMini = Number(document.getElementById("numberofmini").value);
-  }
-  if (document.getElementById("numberofminor")) {
-    numberofMinor = Number(document.getElementById("numberofminor").value);
-  }
-  if (document.getElementById("numberofmajor")) {
-    numberofMajor = Number(document.getElementById("numberofmajor").value);
-  }
-  console.log(numberofMini);
-  console.log(numberofMinor);
-  for (var k = 0; k < numberofMini; k++) {
-    miniday.push(document.getElementById("projday" + k).value);
-  }
-  for (var k = 0; k < numberofMinor; k++) {
-    minorday.push(document.getElementById("projday" + (k + 20)).value);
-  }
-  for (var k = 0; k < numberofMajor; k++) {
-    majorday.push(document.getElementById("projday" + (k + 30)).value);
-  }
+      for (let key of subSet.keys()) {
+        var td = document.createElement('td');
+        td.setAttribute('id', key + days[i]);
 
-  console.log("miniminormajor");
-  console.log(miniday);
-  console.log(miniday.length);
-  console.log(minorday);
-  console.log(majorday);
+        for (var keyVal of subMap.keys()) {
+          if (keyVal == td.id) {
+            td.innerHTML = subMap.get(keyVal);
+          }
+        }
+
+        tr.appendChild(td);
+      }
+
+      for (var abc = 0; abc < subflag; abc++) {
+        var td = document.createElement('td');
+        td.innerHTML = "";
+        tr.appendChild(td);
+      }
+
+      for (let key of practSet.keys()) {
+        var td = document.createElement('td');
+        td.setAttribute('id', key + days[i]);
+        for (var keyVal of practMap.keys()) {
+          if (keyVal == td.id) {
+            td.innerHTML = practMap.get(keyVal);
+          }
+        }
+        // td.innerHTML=key+days[i];
+        tr.appendChild(td);
+      }
+
+      for (var abc = 0; abc < practflag; abc++) {
+        var td = document.createElement('td');
+        td.innerHTML = "";
+        tr.appendChild(td);
+      }
 
 
-  for (var k = 0; k < miniday.length; k++) {
-    var val = 0;
-    var dayid = "mini" + miniday[k];
-    console.log(dayid);
-    var dayvalue = document.getElementById(dayid).innerHTML;
-    console.log(dayvalue);
-    if (dayvalue == "")
-      val = "1";
-    else {
-      val = Number(dayvalue) + 1;
+      var td = document.createElement('td');
+      td.setAttribute('id', "mini" + days[i])
+      // td.innerHTML="small";
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.setAttribute('id', "minor" + days[i])
+      // td.innerHTML="medium";
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.setAttribute('id', "major" + days[i])
+      // td.innerHTML="large";
+      tr.appendChild(td);
+
+
+
+      var td = document.createElement('td');
+      // td.innerHTML="remark";
+      tr.appendChild(td);
+      table.appendChild(tr);
+
     }
-    document.getElementById(dayid).innerHTML = val;
-  }
-  for (var k = 0; k < minorday.length; k++) {
-    var val = 0;
-    var dayid = "minor" + minorday[k];
-    var dayvalue = document.getElementById(dayid).innerHTML;
-    console.log(dayvalue);
-    if (dayvalue == "")
-      val = "1";
-    else {
-      val = Number(dayvalue) + 1;
+
+    //for project lectures
+
+    var numberofMini = 0;
+    var numberofMinor = 0;
+    var numberofMajor = 0;
+    if (document.getElementById("numberofmini")) {
+      numberofMini = Number(document.getElementById("numberofmini").value);
     }
-    document.getElementById(dayid).innerHTML = val;
-  }
-
-  for (var k = 0; k < majorday.length; k++) {
-    var val = 0;
-    var dayid = "major" + majorday[k];
-    var dayvalue = document.getElementById(dayid).innerHTML;
-    console.log(dayvalue);
-    if (dayvalue == "")
-      val = "1";
-    else {
-      val = Number(dayvalue) + 1;
+    if (document.getElementById("numberofminor")) {
+      numberofMinor = Number(document.getElementById("numberofminor").value);
     }
-    document.getElementById(dayid).innerHTML = val;
-  }
+    if (document.getElementById("numberofmajor")) {
+      numberofMajor = Number(document.getElementById("numberofmajor").value);
+    }
+    console.log(numberofMini);
+    console.log(numberofMinor);
+    for (var k = 0; k < numberofMini; k++) {
+      miniday.push(document.getElementById("projday" + k).value);
+    }
+    for (var k = 0; k < numberofMinor; k++) {
+      minorday.push(document.getElementById("projday" + (k + 20)).value);
+    }
+    for (var k = 0; k < numberofMajor; k++) {
+      majorday.push(document.getElementById("projday" + (k + 30)).value);
+    }
 
-  /*
-  ████████  █████  ██████  ██      ███████     ██████   ██████  ████████ ████████  ██████  ███    ███     ███████ ███████  ██████ ████████
-     ██    ██   ██ ██   ██ ██      ██          ██   ██ ██    ██    ██       ██    ██    ██ ████  ████     ██      ██      ██         ██
-     ██    ███████ ██████  ██      █████       ██████  ██    ██    ██       ██    ██    ██ ██ ████ ██     ███████ █████   ██         ██
-     ██    ██   ██ ██   ██ ██      ██          ██   ██ ██    ██    ██       ██    ██    ██ ██  ██  ██          ██ ██      ██         ██
-     ██    ██   ██ ██████  ███████ ███████     ██████   ██████     ██       ██     ██████  ██      ██     ███████ ███████  ██████    ██
-  */
+    console.log("miniminormajor");
+    console.log(miniday);
+    console.log(miniday.length);
+    console.log(minorday);
+    console.log(majorday);
 
-  a = subSet.size + subflag;
-  // b = electSet.size;
-  c = practSet.size + practflag;
-  var tr = document.createElement("tr");
-  tr.setAttribute('class', background[i]);
-  table.append(tr);
-  var td = document.createElement("td");
-  td.setAttribute('colspan', '2');
-  td.setAttribute('rowspan', '2');
-  td.setAttribute('class', 'text-center');
-  td.innerHTML = "Total";
-  tr.append(td);
-  for (var i = 0; i < (a + c + 4); i++) {
+
+    for (var k = 0; k < miniday.length; k++) {
+      var val = 0;
+      var dayid = "mini" + miniday[k];
+      console.log(dayid);
+      var dayvalue = document.getElementById(dayid).innerHTML;
+      console.log(dayvalue);
+      if (dayvalue == "")
+        val = "1";
+      else {
+        val = Number(dayvalue) + 1;
+      }
+      document.getElementById(dayid).innerHTML = val;
+    }
+    for (var k = 0; k < minorday.length; k++) {
+      var val = 0;
+      var dayid = "minor" + minorday[k];
+      var dayvalue = document.getElementById(dayid).innerHTML;
+      console.log(dayvalue);
+      if (dayvalue == "")
+        val = "1";
+      else {
+        val = Number(dayvalue) + 1;
+      }
+      document.getElementById(dayid).innerHTML = val;
+    }
+
+    for (var k = 0; k < majorday.length; k++) {
+      var val = 0;
+      var dayid = "major" + majorday[k];
+      var dayvalue = document.getElementById(dayid).innerHTML;
+      console.log(dayvalue);
+      if (dayvalue == "")
+        val = "1";
+      else {
+        val = Number(dayvalue) + 1;
+      }
+      document.getElementById(dayid).innerHTML = val;
+    }
+
+    /*
+    ████████  █████  ██████  ██      ███████     ██████   ██████  ████████ ████████  ██████  ███    ███     ███████ ███████  ██████ ████████
+       ██    ██   ██ ██   ██ ██      ██          ██   ██ ██    ██    ██       ██    ██    ██ ████  ████     ██      ██      ██         ██
+       ██    ███████ ██████  ██      █████       ██████  ██    ██    ██       ██    ██    ██ ██ ████ ██     ███████ █████   ██         ██
+       ██    ██   ██ ██   ██ ██      ██          ██   ██ ██    ██    ██       ██    ██    ██ ██  ██  ██          ██ ██      ██         ██
+       ██    ██   ██ ██████  ███████ ███████     ██████   ██████     ██       ██     ██████  ██      ██     ███████ ███████  ██████    ██
+    */
+
+    a = subSet.size + subflag;
+    // b = electSet.size;
+    c = practSet.size + practflag;
+    var tr = document.createElement("tr");
+    tr.setAttribute('class', background[i]);
+    table.append(tr);
     var td = document.createElement("td");
-    td.setAttribute('id', 'ttl' + (i + 1));
+    td.setAttribute('colspan', '2');
+    td.setAttribute('rowspan', '2');
+    td.setAttribute('class', 'text-center');
+    td.innerHTML = "Total";
     tr.append(td);
-  }
-  var tr = document.createElement("tr");
-  tr.setAttribute('class', background[i]);
-  table.append(tr);
+    for (var i = 0; i < (a + c + 4); i++) {
+      var td = document.createElement("td");
+      td.setAttribute('id', 'ttl' + (i + 1));
+      tr.append(td);
+    }
+    var tr = document.createElement("tr");
+    tr.setAttribute('class', background[i]);
+    table.append(tr);
 
-  // Code for theory X and next block
-  var td = document.createElement("td");
-  td.setAttribute('class', 'text-center');
-  td.innerHTML = "Theory (X)";
-  if ((a) > 1) {
-    td.setAttribute('colspan', a - 1);
-  } else td.setAttribute('colspan', 1);
-  tr.append(td);
-  td2 = document.createElement("td");
-  td2.setAttribute('id', 'total' + 1);
-  tr.append(td2);
-
-  // Code for Pract Y and next block
-  var td = document.createElement("td");
-  td.setAttribute('class', 'text-center');
-  td.innerHTML = "Pract/Tut (Y)";
-  if (c > 1) {
-    td.setAttribute('colspan', c - 1);
-  } else td.setAttribute('colspan', 1);
-  tr.append(td);
-  td2 = document.createElement("td");
-  td2.setAttribute('id', 'total' + 2);
-  tr.append(td2);
-
-  // Code for Pract z and next two block
-  var td = document.createElement("td");
-  td.setAttribute('class', 'text-center');
-  td.innerHTML = "Project (Z)";
-  td.setAttribute('colspan', 2);
-  tr.append(td);
-  td2 = document.createElement("td");
-  td2.setAttribute('id', 'total' + 3);
-  tr.append(td2);
-
-  var td = document.createElement("td");
-  tr.append(td);
-
-  // Attendance Row
-  var tr = document.createElement("tr");
-  // tr.setAttribute('class',background[i]);
-  table.append(tr);
-  var td = document.createElement("td");
-  td.setAttribute('colspan', '2');
-  td.setAttribute('rowspan', '2');
-  td.setAttribute('class', 'text-center');
-  td.innerHTML = "Attendance %";
-  tr.append(td);
-  for (var i = 0; i < a + c + 4; i++) {
+    // Code for theory X and next block
     var td = document.createElement("td");
-    td.setAttribute('id', 'attperc' + (i + 1));
+    td.setAttribute('class', 'text-center');
+    td.innerHTML = "Theory (X)";
+    if ((a) > 1) {
+      td.setAttribute('colspan', a - 1);
+    } else td.setAttribute('colspan', 1);
     tr.append(td);
-  }
-  var tr = document.createElement("tr");
-  table.append(tr);
-  // Code for Avg A1 and next block
-  var td = document.createElement("td");
-  td.setAttribute('class', 'text-center');
-  td.innerHTML = "Avg (A1)";
-  if ((a) > 1) {
-    td.setAttribute('colspan', a - 1);
-  } else td.setAttribute('colspan', 1);
-  tr.append(td);
-  td2 = document.createElement("td");
-  td2.setAttribute('id', 'perat' + 1);
-  tr.append(td2);
+    td2 = document.createElement("td");
+    td2.setAttribute('id', 'total' + 1);
+    tr.append(td2);
 
-  // Code for Avg A2 and next block
-  var td = document.createElement("td");
-  td.setAttribute('class', 'text-center');
-  td.innerHTML = "Avg (A2)";
-  if (c > 1) {
-    td.setAttribute('colspan', c - 1);
-  } else td.setAttribute('colspan', 1);
-  tr.append(td);
-  td2 = document.createElement("td");
-  td2.setAttribute('id', 'perat' + 2);
-  tr.append(td2);
+    // Code for Pract Y and next block
+    var td = document.createElement("td");
+    td.setAttribute('class', 'text-center');
+    td.innerHTML = "Pract/Tut (Y)";
+    if (c > 1) {
+      td.setAttribute('colspan', c - 1);
+    } else td.setAttribute('colspan', 1);
+    tr.append(td);
+    td2 = document.createElement("td");
+    td2.setAttribute('id', 'total' + 2);
+    tr.append(td2);
 
-  // Code for Avg A3 and next two block
-  var td = document.createElement("td");
-  td.innerHTML = "Avg (A3)";
-  td.setAttribute('class', 'text-center');
-  td.setAttribute('colspan', 2);
-  tr.append(td);
-  td2 = document.createElement("td");
-  td2.setAttribute('id', 'perat' + 3);
-  tr.append(td2);
+    // Code for Pract z and next two block
+    var td = document.createElement("td");
+    td.setAttribute('class', 'text-center');
+    td.innerHTML = "Project (Z)";
+    td.setAttribute('colspan', 2);
+    tr.append(td);
+    td2 = document.createElement("td");
+    td2.setAttribute('id', 'total' + 3);
+    tr.append(td2);
 
-  var td = document.createElement("td");
-  tr.append(td);
-  var tr = document.createElement("tr");
-  table.append(tr);
-  var td = document.createElement("td");
-  td.setAttribute('colspan', a + c + 4);
-  td2 = document.createElement("td");
-  td2.setAttribute('colspan', '2');
-  td2.setAttribute('class', 'A-val');
-  td.setAttribute('class', 'text-center');
-  td.innerHTML = "Attendance Quotient A = A1 * 0.55 + A2 * 0.3 + A3 * 0.15";
-  tr.append(td);
-  tr.append(td2);
+    var td = document.createElement("td");
+    tr.append(td);
 
-  var tr = document.createElement("tr");
-  table.append(tr);
-
-  var td = document.createElement("td");
-  td.innerHTML = "Conduct Score P:"
-  td.setAttribute('class', 'text-center');
-  td.setAttribute('colspan', a);
-  tr.append(td);
-  var td = document.createElement("td");
-  td.setAttribute('id', 'Pscore');
-  td.setAttribute('class', 'text-center');
-  tr.append(td);
-
-  var td = document.createElement("td");
-  td.innerHTML = "Conduct Score Q = P*A"
-  td.setAttribute('class', 'text-center');
-  td.setAttribute('colspan', c);
-  tr.append(td);
-  var td = document.createElement("td");
-  td.setAttribute('id', 'Qscore');
-  td.setAttribute('class', 'text-center');
-  tr.append(td);
-
-  var td = document.createElement("td");
-  td.innerHTML = "Conduct Score R:"
-  td.setAttribute('class', 'text-center');
-  td.setAttribute('colspan', "3");
-  tr.append(td);
-  var td = document.createElement("td");
-  td.setAttribute('id', 'Rscore');
-  td.setAttribute('class', 'text-center');
-  tr.append(td);
-
-  console.log("**************************************************************************************************** ");
-  // console.log("final subject list is: ");
-  var days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
-  // for theory total
-  var ctr = 0;
-
-  console.log(parseInt(subjectList.size));
-
-  if (parseInt(subjectList.size) == 0) {
-    ctr++;
-    var arraynew = "0";
-    // $("#ttl"+ctr).innerHTML = "0";
-    $("#ttl" + ctr).html("0");
-    ctr++;
-    var arraynew = 0;
-    $("#ttl" + ctr).html("0");
-  } else if (parseInt(subjectList.size) == 1) {
-    for (let key of subjectList.keys()) {
-      var arraynew = 0;
-      ctr++;
-      for (var j = 0; j < 6; j++) {
-        if ($("#" + key + days[j]).text() != "") {
-          arraynew += parseInt($("#" + key + days[j]).text());
-        }
-      }
-      $("#ttl" + ctr).html(arraynew);
+    // Attendance Row
+    var tr = document.createElement("tr");
+    // tr.setAttribute('class',background[i]);
+    table.append(tr);
+    var td = document.createElement("td");
+    td.setAttribute('colspan', '2');
+    td.setAttribute('rowspan', '2');
+    td.setAttribute('class', 'text-center');
+    td.innerHTML = "Attendance %";
+    tr.append(td);
+    for (var i = 0; i < a + c + 4; i++) {
+      var td = document.createElement("td");
+      td.setAttribute('id', 'attperc' + (i + 1));
+      tr.append(td);
     }
-    ctr++;
-    var arraynew = 0;
-    $("#ttl" + ctr).html("0");
-  } else {
-    for (let key of subjectList.keys()) {
-      var arraynew = 0;
+    var tr = document.createElement("tr");
+    table.append(tr);
+    // Code for Avg A1 and next block
+    var td = document.createElement("td");
+    td.setAttribute('class', 'text-center');
+    td.innerHTML = "Avg (A1)";
+    if ((a) > 1) {
+      td.setAttribute('colspan', a - 1);
+    } else td.setAttribute('colspan', 1);
+    tr.append(td);
+    td2 = document.createElement("td");
+    td2.setAttribute('id', 'perat' + 1);
+    tr.append(td2);
+
+    // Code for Avg A2 and next block
+    var td = document.createElement("td");
+    td.setAttribute('class', 'text-center');
+    td.innerHTML = "Avg (A2)";
+    if (c > 1) {
+      td.setAttribute('colspan', c - 1);
+    } else td.setAttribute('colspan', 1);
+    tr.append(td);
+    td2 = document.createElement("td");
+    td2.setAttribute('id', 'perat' + 2);
+    tr.append(td2);
+
+    // Code for Avg A3 and next two block
+    var td = document.createElement("td");
+    td.innerHTML = "Avg (A3)";
+    td.setAttribute('class', 'text-center');
+    td.setAttribute('colspan', 2);
+    tr.append(td);
+    td2 = document.createElement("td");
+    td2.setAttribute('id', 'perat' + 3);
+    tr.append(td2);
+
+    var td = document.createElement("td");
+    tr.append(td);
+    var tr = document.createElement("tr");
+    table.append(tr);
+    var td = document.createElement("td");
+    td.setAttribute('colspan', a + c + 4);
+    td2 = document.createElement("td");
+    td2.setAttribute('colspan', '2');
+    td2.setAttribute('class', 'A-val');
+    td.setAttribute('class', 'text-center');
+    td.innerHTML = "Attendance Quotient A = A1 * 0.55 + A2 * 0.3 + A3 * 0.15";
+    tr.append(td);
+    tr.append(td2);
+
+    var tr = document.createElement("tr");
+    table.append(tr);
+
+    var td = document.createElement("td");
+    td.innerHTML = "Conduct Score P:"
+    td.setAttribute('class', 'text-center');
+    td.setAttribute('colspan', a);
+    tr.append(td);
+    var td = document.createElement("td");
+    td.setAttribute('id', 'Pscore');
+    td.setAttribute('class', 'text-center');
+    tr.append(td);
+
+    var td = document.createElement("td");
+    td.innerHTML = "Conduct Score Q = P*A"
+    td.setAttribute('class', 'text-center');
+    td.setAttribute('colspan', c);
+    tr.append(td);
+    var td = document.createElement("td");
+    td.setAttribute('id', 'Qscore');
+    td.setAttribute('class', 'text-center');
+    tr.append(td);
+
+    var td = document.createElement("td");
+    td.innerHTML = "Conduct Score R:"
+    td.setAttribute('class', 'text-center');
+    td.setAttribute('colspan', "3");
+    tr.append(td);
+    var td = document.createElement("td");
+    td.setAttribute('id', 'Rscore');
+    td.setAttribute('class', 'text-center');
+    tr.append(td);
+
+    console.log("**************************************************************************************************** ");
+    // console.log("final subject list is: ");
+    var days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+    // for theory total
+    var ctr = 0;
+
+    console.log(parseInt(subjectList.size));
+
+    if (parseInt(subjectList.size) == 0) {
       ctr++;
-      for (var j = 0; j < 6; j++) {
-        if ($("#" + key + days[j]).text() != "") {
-          arraynew += parseInt($("#" + key + days[j]).text());
-          console.log("000000000000000000000000000000000000000000000000000");
-          console.log(key + ": " + arraynew);
-        }
-      }
-      $("#ttl" + ctr).html(arraynew);
-    }
-  }
-  // console.log(subjectList);
-  // console.log("********************************************************");
-
-  // // // for electives total
-  // for (let key of electiveList.keys()) {
-  //   var arraynew = 0;
-  //   ctr++;
-  //   for (var j = 0; j < 6; j++) {
-  //     if ($("#" + key + days[j]).text() != "") {
-  //       arraynew += parseInt($("#" + key + days[j]).text());
-  //       // console.log(subjects[i].value+days[j]+": "+arraynew);
-  //     }
-  //   }
-  //   $("#ttl" + ctr).html(arraynew);
-  // }
-  // console.log(electiveList);
-  // console.log("********************************************************");
-
-  // for theory final
-  var total1 = 0;
-  var tot1 = ctr;
-  for (var i = 0; i < ctr; i++) {
-    total1 += parseInt($("#ttl" + (i + 1)).text());
-  }
-  if (total1 == 0)
-    total1 = 100;
-  $("#total1").html(total1);
-
-  // for pracs total
-  if (parseInt(practicalList.size) == 0) {
-    ctr++;
-    var arraynew = 0;
-    $("#ttl" + ctr).html("0");
-    ctr++;
-    var arraynew = 0;
-    $("#ttl" + ctr).html("0");
-  } else if (parseInt(practicalList.size) == 1) {
-    for (let key of practicalList.keys()) {
-      var arraynew = 0;
+      var arraynew = "0";
+      // $("#ttl"+ctr).innerHTML = "0";
+      $("#ttl" + ctr).html("0");
       ctr++;
-      for (var j = 0; j < 6; j++) {
-        if ($("#" + key + days[j]).text() != "") {
-          arraynew += parseInt($("#" + key + days[j]).text());
-        }
-      }
-      $("#ttl" + ctr).html(arraynew);
-    }
-    ctr++;
-    var arraynew = 0;
-    $("#ttl" + ctr).html("0");
-  } else {
-    for (let key of practicalList.keys()) {
       var arraynew = 0;
-      ctr++;
-      for (var j = 0; j < 6; j++) {
-        if ($("#" + key + days[j]).text() != "") {
-          arraynew += parseInt($("#" + key + days[j]).text());
-          // console.log(subjects[i].value+days[j]+": "+arraynew);
+      $("#ttl" + ctr).html("0");
+    } else if (parseInt(subjectList.size) == 1) {
+      for (let key of subjectList.keys()) {
+        var arraynew = 0;
+        ctr++;
+        for (var j = 0; j < 6; j++) {
+          if ($("#" + key + days[j]).text() != "") {
+            arraynew += parseInt($("#" + key + days[j]).text());
+          }
         }
+        $("#ttl" + ctr).html(arraynew);
       }
-      $("#ttl" + ctr).html(arraynew);
+      ctr++;
+      var arraynew = 0;
+      $("#ttl" + ctr).html("0");
+    } else {
+      for (let key of subjectList.keys()) {
+        var arraynew = 0;
+        ctr++;
+        for (var j = 0; j < 6; j++) {
+          if ($("#" + key + days[j]).text() != "") {
+            arraynew += parseInt($("#" + key + days[j]).text());
+            console.log("000000000000000000000000000000000000000000000000000");
+            console.log(key + ": " + arraynew);
+          }
+        }
+        $("#ttl" + ctr).html(arraynew);
+      }
     }
-  }
-  console.log(practicalList);
-  console.log("********************************************************");
+    // console.log(subjectList);
+    // console.log("********************************************************");
 
-  // for practical final
-  var total2 = 0;
-  for (var i = tot1; i < ctr; i++) {
-    total2 += parseInt($("#ttl" + (i + 1)).text());
-  }
-  if (total2 == 0)
-    total2 = 100;
-  $("#total2").html(total2);
-  console.log("********************************************************");
-
-  var m3 = ["mini", "minor", "major"];
-  // for (var i = 0; i < m3.length; i++) {
-  //   var arraynew = 0;
-  //   for (var j = 0; j < days.length; j++) {
-  //     if ($("#" + m3[i] + days[j]).text() != "") {
-  //       arraynew += parseInt($("#" + m3[i] + days[j]).text());
-  //     }
-  //   }
-  //   // $("#ttl" + ((subSet.size + electSet.size + practSet.size + 1) + ctr)).html(arraynew);
-  //   $("#ttl" + ((subSet.size + practSet.size + 1) + ctr)).html(arraynew);
-  //   ctr++;
-  // }
-  ctr++;
-  var flagpracstart = ctr;
-  $('#ttl' + ctr).html(parseInt($('#numberofmini').val()));
-  // $('#ttl' + ctr).html(parseInt($('#mini-input').val()));
-  ctr++;
-  $('#ttl' + ctr).html(parseInt($('#numberminor').val()));
-  // $('#ttl' + ctr).html(parseInt($('#minor-input').val()));
-  ctr++;
-  $('#ttl' + ctr).html(parseInt($('#numberofmajor').val()));
-  // $('#ttl' + ctr).html(parseInt($('#major-input').val()));
-
-  // Attendance Percentage
-  var ctr = 0;
-  for (let key of subjectList.keys()) {
-    var arraynew = 0;
-    ctr++;
-    // for (var j = 0; j < 6; j++) {
-    //   if ($("#" + key + days[j]).text() != "") {
-    //     arraynew += parseInt($("#" + key + days[j]).text());
-    //     // console.log(subjects[i].value+days[j]+": "+arraynew);
+    // // // for electives total
+    // for (let key of electiveList.keys()) {
+    //   var arraynew = 0;
+    //   ctr++;
+    //   for (var j = 0; j < 6; j++) {
+    //     if ($("#" + key + days[j]).text() != "") {
+    //       arraynew += parseInt($("#" + key + days[j]).text());
+    //       // console.log(subjects[i].value+days[j]+": "+arraynew);
+    //     }
     //   }
+    //   $("#ttl" + ctr).html(arraynew);
     // }
-    arraynew = subjectList.get(key);
-  }
-  // console.log(subjectList);
-  // console.log("********************************************************");
-  // ctr = 0;
+    // console.log(electiveList);
+    // console.log("********************************************************");
 
-  // var xx = subSet.size + electSet.size + practSet.size + 1;
-  // var xx = subSet.size + practSet.size + 1;
-  var xx = flagpracstart;
-  var total3 = parseInt($("#ttl" + xx).text()) + parseInt($("#ttl" + (xx + 1)).text()) + parseInt($("#ttl" + (xx + 2)).text());
-  $("#total3").html(total3);
+    // for theory final
+    var total1 = 0;
+    var tot1 = ctr;
+    for (var i = 0; i < ctr; i++) {
+      total1 += parseInt($("#ttl" + (i + 1)).text());
+    }
+    if (total1 == 0)
+      total1 = 100;
+    $("#total1").html(total1);
 
-  /*************************************************************************
-   *************************************************************************/
-
-  //theory
-  var subAttnClass = document.getElementsByClassName("subjects");
-
-  var subAttnClassLen = subAttnClass.length;
-
-  var subAttnMap = new Map();
-
-  for (var m = 0; m < subAttnClassLen; m++) {
-    var sub = subAttnClass[m].value;
-    var subAttn = parseFloat(document.getElementById(200 + m).innerHTML);
-
-    // console.log("sub "+sub+"subAttn "+subAttn);
-
-    if (!subAttnMap.get(sub)) {
-      subAttnMap.set(sub, subAttn);
+    // for pracs total
+    if (parseInt(practicalList.size) == 0) {
+      ctr++;
+      var arraynew = 0;
+      $("#ttl" + ctr).html("0");
+      ctr++;
+      var arraynew = 0;
+      $("#ttl" + ctr).html("0");
+    } else if (parseInt(practicalList.size) == 1) {
+      for (let key of practicalList.keys()) {
+        var arraynew = 0;
+        ctr++;
+        for (var j = 0; j < 6; j++) {
+          if ($("#" + key + days[j]).text() != "") {
+            arraynew += parseInt($("#" + key + days[j]).text());
+          }
+        }
+        $("#ttl" + ctr).html(arraynew);
+      }
+      ctr++;
+      var arraynew = 0;
+      $("#ttl" + ctr).html("0");
     } else {
-      counter = parseFloat(subAttnMap.get(sub));
-      subAttnMap.set(sub, counter + subAttn);
+      for (let key of practicalList.keys()) {
+        var arraynew = 0;
+        ctr++;
+        for (var j = 0; j < 6; j++) {
+          if ($("#" + key + days[j]).text() != "") {
+            arraynew += parseInt($("#" + key + days[j]).text());
+            // console.log(subjects[i].value+days[j]+": "+arraynew);
+          }
+        }
+        $("#ttl" + ctr).html(arraynew);
+      }
     }
-  }
+    console.log(practicalList);
+    console.log("********************************************************");
 
-  for (var keyVal of subAttnMap.keys()) {
-    subAttnMap.set(keyVal, parseFloat(subAttnMap.get(keyVal) / subCountMap.get(keyVal)));
-  }
+    // for practical final
+    var total2 = 0;
+    for (var i = tot1; i < ctr; i++) {
+      total2 += parseInt($("#ttl" + (i + 1)).text());
+    }
+    if (total2 == 0)
+      total2 = 100;
+    $("#total2").html(total2);
+    console.log("********************************************************");
 
-  console.log("subAttnMap is ");
-  console.log(subAttnMap);
+    var m3 = ["mini", "minor", "major"];
+    // for (var i = 0; i < m3.length; i++) {
+    //   var arraynew = 0;
+    //   for (var j = 0; j < days.length; j++) {
+    //     if ($("#" + m3[i] + days[j]).text() != "") {
+    //       arraynew += parseInt($("#" + m3[i] + days[j]).text());
+    //     }
+    //   }
+    //   // $("#ttl" + ((subSet.size + electSet.size + practSet.size + 1) + ctr)).html(arraynew);
+    //   $("#ttl" + ((subSet.size + practSet.size + 1) + ctr)).html(arraynew);
+    //   ctr++;
+    // }
+    ctr++;
+    var flagpracstart = ctr;
+    $('#ttl' + ctr).html(parseInt($('#numberofmini').val()));
+    // $('#ttl' + ctr).html(parseInt($('#mini-input').val()));
+    ctr++;
+    $('#ttl' + ctr).html(parseInt($('#numberofminor').val()));
+    // $('#ttl' + ctr).html(parseInt($('#minor-input').val()));
+    ctr++;
+    $('#ttl' + ctr).html(parseInt($('#numberofmajor').val()));
+    // $('#ttl' + ctr).html(parseInt($('#major-input').val()));
 
-  // //elective
-  //
-  // var electAttnMap = new Map();
-  // var b = parseInt(document.getElementById("inputElectiveCond").value);
-  // for (var m = 0; m < b; m++) {
-  //   var electsubjects = document.getElementsByClassName(1000 + m);
-  //   var electivename = electsubjects[0].value;
-  //
-  //   var electAttn = parseFloat(document.getElementById(1200 + m).innerHTML);
-  //
-  //   if (!electAttnMap.get(electivename)) {
-  //     electAttnMap.set(electivename, electAttn);
-  //   } else {
-  //     var ctr = parseFloat(electAttnMap.get(electivename));
-  //     electAttnMap.set(electivename, ctr + electAttn);
-  //   }
-  //
-  // }
-  //
-  //
-  // for (var keyVal of electAttnMap.keys()) {
-  //   electAttnMap.set(keyVal, parseFloat(electAttnMap.get(keyVal) / electCountMap.get(keyVal)));
-  // }
-  //
-  //
-  // console.log("electAttnMap is ");
-  // console.log(electAttnMap);
+    // Attendance Percentage
+    var ctr = 0;
+    for (let key of subjectList.keys()) {
+      var arraynew = 0;
+      ctr++;
+      // for (var j = 0; j < 6; j++) {
+      //   if ($("#" + key + days[j]).text() != "") {
+      //     arraynew += parseInt($("#" + key + days[j]).text());
+      //     // console.log(subjects[i].value+days[j]+": "+arraynew);
+      //   }
+      // }
+      arraynew = subjectList.get(key);
+    }
+    // console.log(subjectList);
+    // console.log("********************************************************");
+    // ctr = 0;
 
-  //practical
-  var practAttnClass = document.getElementsByClassName("practs");
+    // var xx = subSet.size + electSet.size + practSet.size + 1;
+    // var xx = subSet.size + practSet.size + 1;
+    var xx = flagpracstart;
+    var total3 = parseInt($("#ttl" + xx).text()) + parseInt($("#ttl" + (xx + 1)).text()) + parseInt($("#ttl" + (xx + 2)).text());
+    $("#total3").html(total3);
 
-  var practAttnClassLen = practAttnClass.length;
+    /*************************************************************************
+     *************************************************************************/
 
-  var practAttnMap = new Map();
+    //theory
+    var subAttnClass = document.getElementsByClassName("subjects");
 
-  for (var m = 0; m < practAttnClassLen; m++) {
-    var sub = practAttnClass[m].value;
-    var subAttn = parseFloat(document.getElementById(6000 + m).innerHTML);
+    var subAttnClassLen = subAttnClass.length;
 
-    // console.log("sub "+sub+"subAttn "+subAttn);
+    var subAttnMap = new Map();
+
+    for (var m = 0; m < subAttnClassLen; m++) {
+      var sub = subAttnClass[m].value;
+      var subAttn = parseFloat(document.getElementById(200 + m).innerHTML);
+
+      // console.log("sub "+sub+"subAttn "+subAttn);
+
+      if (!subAttnMap.get(sub)) {
+        subAttnMap.set(sub, subAttn);
+      } else {
+        counter = parseFloat(subAttnMap.get(sub));
+        subAttnMap.set(sub, counter + subAttn);
+      }
+    }
+
+    for (var keyVal of subAttnMap.keys()) {
+      subAttnMap.set(keyVal, parseFloat(subAttnMap.get(keyVal) / subCountMap.get(keyVal)));
+    }
+
+    console.log("subAttnMap is ");
+    console.log(subAttnMap);
+
+    // //elective
+    //
+    // var electAttnMap = new Map();
+    // var b = parseInt(document.getElementById("inputElectiveCond").value);
+    // for (var m = 0; m < b; m++) {
+    //   var electsubjects = document.getElementsByClassName(1000 + m);
+    //   var electivename = electsubjects[0].value;
+    //
+    //   var electAttn = parseFloat(document.getElementById(1200 + m).innerHTML);
+    //
+    //   if (!electAttnMap.get(electivename)) {
+    //     electAttnMap.set(electivename, electAttn);
+    //   } else {
+    //     var ctr = parseFloat(electAttnMap.get(electivename));
+    //     electAttnMap.set(electivename, ctr + electAttn);
+    //   }
+    //
+    // }
+    //
+    //
+    // for (var keyVal of electAttnMap.keys()) {
+    //   electAttnMap.set(keyVal, parseFloat(electAttnMap.get(keyVal) / electCountMap.get(keyVal)));
+    // }
+    //
+    //
+    // console.log("electAttnMap is ");
+    // console.log(electAttnMap);
+
+    //practical
+    var practAttnClass = document.getElementsByClassName("practs");
+
+    var practAttnClassLen = practAttnClass.length;
+
+    var practAttnMap = new Map();
+
+    for (var m = 0; m < practAttnClassLen; m++) {
+      var sub = practAttnClass[m].value;
+      var subAttn = parseFloat(document.getElementById(6000 + m).innerHTML);
+
+      // console.log("sub "+sub+"subAttn "+subAttn);
 
 
-    if (!practAttnMap.get(sub)) {
-      practAttnMap.set(sub, subAttn);
+      if (!practAttnMap.get(sub)) {
+        practAttnMap.set(sub, subAttn);
+      } else {
+        counter = parseFloat(practAttnMap.get(sub));
+        practAttnMap.set(sub, counter + subAttn);
+      }
+
+    }
+
+    for (var keyVal of practAttnMap.keys()) {
+      practAttnMap.set(keyVal, parseFloat(practAttnMap.get(keyVal) / practCountMap.get(keyVal)));
+    }
+
+    console.log("subAttnMap is ");
+    console.log(subAttnMap);
+
+
+    var m = 1;
+
+    console.log(parseInt(subAttnMap.size));
+
+    if (parseInt(subAttnMap.size) == 0) {
+      var attnele = document.getElementById("attperc" + m);
+      attnele.innerHTML = 0;
+      m++;
+      attnele.setAttribute("id", "attn" + "perc1");
+      var attnele = document.getElementById("attperc" + m);
+      attnele.innerHTML = 0;
+      m++;
+      attnele.setAttribute("id", "attn" + "perc2");
+    } else if (parseInt(subAttnMap.size) == 1) {
+      for (var keyVal of subAttnMap.keys()) {
+        var attnele = document.getElementById("attperc" + m);
+        attnele.innerHTML = 0;
+        m++;
+        attnele.setAttribute("id", "attnsub" + keyVal);
+      }
+      var attnele = document.getElementById("attperc" + m);
+      attnele.innerHTML = 0;
+      m++;
+      attnele.setAttribute("id", "attn" + "perc1");
     } else {
-      counter = parseFloat(practAttnMap.get(sub));
-      practAttnMap.set(sub, counter + subAttn);
+      for (var keyVal of subAttnMap.keys()) {
+        var attnele = document.getElementById("attperc" + m);
+        attnele.innerHTML = 0;
+        m++;
+        attnele.setAttribute("id", "attnsub" + keyVal);
+      }
     }
 
-  }
-
-  for (var keyVal of practAttnMap.keys()) {
-    practAttnMap.set(keyVal, parseFloat(practAttnMap.get(keyVal) / practCountMap.get(keyVal)));
-  }
-
-  console.log("subAttnMap is ");
-  console.log(subAttnMap);
-
-
-  var m = 1;
-
-  console.log(parseInt(subAttnMap.size));
-
-  if (parseInt(subAttnMap.size) == 0) {
+    // for (var keyVal of electAttnMap.keys()) {
+    //   var attnele = document.getElementById("attperc" + m);
+    //   m++;
+    //   attnele.setAttribute("id", "attn" + keyVal);
+    // }
+    if (parseInt(practAttnMap.size) == 0) {
+      var attnele = document.getElementById("attperc" + m);
+      attnele.innerHTML = 0;
+      m++;
+      attnele.setAttribute("id", "attn" + "perc" + m);
+      attnele.innerHTML = 0;
+      var attnele = document.getElementById("attperc" + m);
+      attnele.innerHTML = 0;
+      m++;
+      attnele.setAttribute("id", "attn" + "perc" + m);
+    } else if (parseInt(practAttnMap.size) == 1) {
+      for (var keyVal of practAttnMap.keys()) {
+        var attnele = document.getElementById("attperc" + m);
+        attnele.innerHTML = 0;
+        m++;
+        attnele.setAttribute("id", "attnpract" + keyVal);
+      }
+      var attnele = document.getElementById("attperc" + m);
+      attnele.innerHTML = 0;
+      m++;
+      attnele.setAttribute("id", "attn" + "perc" + m);
+    } else {
+      for (var keyVal of practAttnMap.keys()) {
+        var attnele = document.getElementById("attperc" + m);
+        attnele.innerHTML = 0;
+        m++;
+        attnele.setAttribute("id", "attnpract" + keyVal);
+      }
+    }
     var attnele = document.getElementById("attperc" + m);
     attnele.innerHTML = 0;
     m++;
-    attnele.setAttribute("id", "attn" + "perc1");
+    attnele.setAttribute("id", "attn" + "mini");
+
     var attnele = document.getElementById("attperc" + m);
     attnele.innerHTML = 0;
     m++;
-    attnele.setAttribute("id", "attn" + "perc2");
-  } else if (parseInt(subAttnMap.size) == 1) {
+    attnele.setAttribute("id", "attn" + "minor");
+
+    var attnele = document.getElementById("attperc" + m);
+    attnele.innerHTML = 0;
+    m++;
+    attnele.setAttribute("id", "attn" + "major");
+
+    var attnele = document.getElementById("attperc" + m);
+    m++;
+    attnele.setAttribute("id", "attn" + "remark");
+
+    /***********************************************
+    adding attendance to the attendance % field
+    ***********************************************/
+    var a = subSet.size;
+    // var b = electSet.size;
+    var c = practSet.size;
+
+    var a1 = 0;
     for (var keyVal of subAttnMap.keys()) {
-      var attnele = document.getElementById("attperc" + m);
-      attnele.innerHTML = 0;
-      m++;
-      attnele.setAttribute("id", "attnsub" + keyVal);
+      var attnele = document.getElementById("attnsub" + keyVal);
+      attnele.innerHTML = subAttnMap.get(keyVal);
+      a1 += parseFloat(attnele.innerHTML);
     }
-    var attnele = document.getElementById("attperc" + m);
-    attnele.innerHTML = 0;
-    m++;
-    attnele.setAttribute("id", "attn" + "perc1");
-  } else {
-    for (var keyVal of subAttnMap.keys()) {
-      var attnele = document.getElementById("attperc" + m);
-      attnele.innerHTML = 0;
-      m++;
-      attnele.setAttribute("id", "attnsub" + keyVal);
-    }
-  }
-
-  // for (var keyVal of electAttnMap.keys()) {
-  //   var attnele = document.getElementById("attperc" + m);
-  //   m++;
-  //   attnele.setAttribute("id", "attn" + keyVal);
-  // }
-  if (parseInt(practAttnMap.size) == 0) {
-    var attnele = document.getElementById("attperc" + m);
-    attnele.innerHTML = 0;
-    m++;
-    attnele.setAttribute("id", "attn" + "perc" + m);
-    attnele.innerHTML = 0;
-    var attnele = document.getElementById("attperc" + m);
-    attnele.innerHTML = 0;
-    m++;
-    attnele.setAttribute("id", "attn" + "perc" + m);
-  } else if (parseInt(practAttnMap.size) == 1) {
+    // for (var keyVal of electAttnMap.keys()) {
+    //   var attnele = document.getElementById("attn" + keyVal);
+    //   attnele.innerHTML = electAttnMap.get(keyVal);
+    //   a1 += parseFloat(attnele.innerHTML);
+    // }
+    var a2 = 0;
     for (var keyVal of practAttnMap.keys()) {
-      var attnele = document.getElementById("attperc" + m);
-      attnele.innerHTML = 0;
-      m++;
-      attnele.setAttribute("id", "attnpract" + keyVal);
+      var attnele = document.getElementById("attnpract" + keyVal);
+      attnele.innerHTML = practAttnMap.get(keyVal);
+      a2 += parseFloat(attnele.innerHTML);
     }
-    var attnele = document.getElementById("attperc" + m);
-    attnele.innerHTML = 0;
-    m++;
-    attnele.setAttribute("id", "attn" + "perc" + m);
-  } else {
-    for (var keyVal of practAttnMap.keys()) {
-      var attnele = document.getElementById("attperc" + m);
-      attnele.innerHTML = 0;
-      m++;
-      attnele.setAttribute("id", "attnpract" + keyVal);
+    if (document.getElementById("total1").innerHTML == 0)
+      document.getElementById("perat1").innerHTML = 0;
+    else
+      document.getElementById("perat1").innerHTML = a1 / (a);
+    if (document.getElementById("total2").innerHTML == 0)
+      document.getElementById("perat2").innerHTML = 0;
+    else
+      document.getElementById("perat2").innerHTML = a2 / c;
+
+    // THE ORGINAL CODE
+
+    if (document.getElementById("perat1").innerHTML == 0 || document.getElementById("perat1").innerHTML == 'NaN')
+      document.getElementById("perat1").innerHTML = 100;
+    if (document.getElementById("perat2").innerHTML == 0 || document.getElementById("perat2").innerHTML == 'NaN')
+      document.getElementById("perat2").innerHTML = 100;
+
+
+    // ===============================================================
+    //                Complete Project Bottom Section
+    // ===============================================================
+    var miniavg = 0
+    for (var i = 0; i < parseInt($("#numberofmini").val()); i++) {
+      if ($("#inputminival" + i).val() != "") {
+        miniavg += parseInt($("#inputminival" + i).val());
+        console.log("miniavg======== " + miniavg);
+      }
     }
-  }
-  var attnele = document.getElementById("attperc" + m);
-  attnele.innerHTML = 0;
-  m++;
-  attnele.setAttribute("id", "attn" + "mini");
+    if (miniavg > 0)
+      miniavg /= parseInt($("#numberofmini").val());
 
-  var attnele = document.getElementById("attperc" + m);
-  attnele.innerHTML = 0;
-  m++;
-  attnele.setAttribute("id", "attn" + "minor");
-
-  var attnele = document.getElementById("attperc" + m);
-  attnele.innerHTML = 0;
-  m++;
-  attnele.setAttribute("id", "attn" + "major");
-
-  var attnele = document.getElementById("attperc" + m);
-  m++;
-  attnele.setAttribute("id", "attn" + "remark");
-
-  /***********************************************
-  adding attendance to the attendance % field
-  ***********************************************/
-  var a = subSet.size;
-  // var b = electSet.size;
-  var c = practSet.size;
-
-  var a1 = 0;
-  for (var keyVal of subAttnMap.keys()) {
-    var attnele = document.getElementById("attnsub" + keyVal);
-    attnele.innerHTML = subAttnMap.get(keyVal);
-    a1 += parseFloat(attnele.innerHTML);
-  }
-  // for (var keyVal of electAttnMap.keys()) {
-  //   var attnele = document.getElementById("attn" + keyVal);
-  //   attnele.innerHTML = electAttnMap.get(keyVal);
-  //   a1 += parseFloat(attnele.innerHTML);
-  // }
-  var a2 = 0;
-  for (var keyVal of practAttnMap.keys()) {
-    var attnele = document.getElementById("attnpract" + keyVal);
-    attnele.innerHTML = practAttnMap.get(keyVal);
-    a2 += parseFloat(attnele.innerHTML);
-  }
-  if (document.getElementById("total1").innerHTML == 0)
-    document.getElementById("perat1").innerHTML = 0;
-  else
-    document.getElementById("perat1").innerHTML = a1 / (a);
-  if (document.getElementById("total2").innerHTML == 0)
-    document.getElementById("perat2").innerHTML = 0;
-  else
-    document.getElementById("perat2").innerHTML = a2 / c;
-
-  // THE ORGINAL CODE
-
-  if (document.getElementById("perat1").innerHTML == 0 || document.getElementById("perat1").innerHTML == 'NaN')
-    document.getElementById("perat1").innerHTML = 100;
-  if (document.getElementById("perat2").innerHTML == 0 || document.getElementById("perat2").innerHTML == 'NaN')
-    document.getElementById("perat2").innerHTML = 100;
-
-
-  // ===============================================================
-  //                Complete Project Bottom Section
-  // ===============================================================
-  var miniavg = 0
-  for (var i = 0; i < parseInt($("#numberofmini").val()); i++) {
-    if ($("#inputminival" + i).val() != "") {
-      miniavg += parseInt($("#inputminival" + i).val());
-      console.log("miniavg======== " + miniavg);
+    var minoravg = 0;
+    for (var i = 0; i < parseInt($("#numberofminor").val()); i++) {
+      if ($("#inputminorval" + i).val() != "") {
+        minoravg += parseInt($("#inputminorval" + i).val());
+        console.log("minoravg======== " + minoravg);
+      }
     }
-  }
-  if (miniavg > 0)
-    miniavg /= parseInt($("#numberofmini").val());
+    if (minoravg > 0)
+      minoravg /= parseInt($("#numberofminor").val());
 
-  var minoravg = 0;
-  for (var i = 0; i < parseInt($("#numberofminor").val()); i++) {
-    if ($("#inputminorval" + i).val() != "") {
-      minoravg += parseInt($("#inputminorval" + i).val());
-      console.log("minoravg======== " + minoravg);
+    var majoravg = 0
+    for (var i = 0; i < parseInt($("#numberofmajor").val()); i++) {
+      if ($("#inputmajorval" + i).val() != "") {
+        majoravg += parseInt($("#inputmajorval" + i).val());
+        console.log("majoravg======== " + majoravg);
+      }
     }
-  }
-  if (minoravg > 0)
-    minoravg /= parseInt($("#numberofminor").val());
+    if (majoravg > 0)
+      majoravg /= parseInt($("#numberofmajor").val());
 
-  var majoravg = 0
-  for (var i = 0; i < parseInt($("#numberofmajor").val()); i++) {
-    if ($("#inputmajorval" + i).val() != "") {
-      majoravg += parseInt($("#inputmajorval" + i).val());
-      console.log("majoravg======== " + majoravg);
+    $("#attnmini").html(miniavg);
+    $("#attnminor").html(minoravg);
+    $("#attnmajor").html(majoravg);
+
+    $("#perat3").html((miniavg + minoravg + majoravg) / 3);
+    if (document.getElementById("perat3").innerHTML == 0 || document.getElementById("perat3").innerHTML == 'NaN')
+      document.getElementById("perat3").innerHTML = 100;
+
+    var A = (parseFloat($("#perat1").text()) * 0.55) + (parseFloat($("#perat2").text()) * 0.3) + (parseFloat($("#perat3").text()) * 0.15);
+    $(".A-val").html(A);
+
+    var PLANEDHRS = (parseFloat($('#mini-input-planned').val()) + parseFloat($('#minor-input-planned').val()) + parseFloat($('#major-input-planned').val())); /*total project hours calculation*/
+    // var PLANEDHRS = parseFloat($("#total3").text())
+    var part1 = (parseFloat($('#total1').text()) / (parseFloat($('#inputTheoryAssn').val())));
+    if (!(part1 > 0) || part1 == 'Infinity') {
+      part1 = 1;
     }
+    var part2 = (parseFloat($('#total2').text()) / parseFloat($('#inputPracsAssn').val()));
+    if (!(part2 > 0) || part2 == 'Infinity') {
+      part2 = 1;
+    }
+    var part3 = (parseFloat($('#total3').text()) / PLANEDHRS);
+    if (!(part3 > 0) || part3 == 'Infinity') {
+      part3 = 1;
+    }
+
+    console.log("Part1 " + part1);
+    console.log("Part2 " + part2);
+    console.log("Part3 " + part3);
+    var PS1 = (part1 * 50);
+    var PS2 = (part2 * 30);
+    var PS3 = (part3 * 20);
+    var PS = PS1 + PS2 + PS3;
+    var Q = (PS * A) / 100;
+    // var allSubjects { PDS: "value1", HMI: "value2", DWM: "", ML: "", BDA: "", DF: "", CCL: ""};
+    // console.log(allSubjects[PDS]);
+
+    // var avgTnessQtnt;
+    // var R = PS * avgTnessQtnt;
+    document.getElementById("Pscore").innerHTML = PS;
+    document.getElementById("Qscore").innerHTML = Q;
+    // $("#Pscore").html(PS);
+    // $("#Qscore").html(Q);
+    // $("#Rscore").html(R);
+
+    var tq = new Map();
+
+    tq['PDS'] = 1;
+    tq['HMI'] = 0.9;
+    tq['DWM'] = 1;
+    tq['ML'] = 1.1;
+    tq['BDA'] = 1;
+    tq['DF'] = 1;
+    tq['CCL'] = 1.1;
+
+    tq['AM-IV'] = 1.1;
+    tq['AOA'] = 1.1;
+    tq['COA'] = 1;
+    tq['CG'] = 1;
+    tq['OS'] = 1;
+    tq['OSTL'] = 1;
+
+    tq['SPCC'] = 1.1;
+    tq['MCC'] = 1;
+    tq['DD'] = 1;
+    tq['SE'] = 1;
+    tq['OR'] = 1;
+    tq['SPM'] = 0.9;
+    tq['FR'] = 0.9;
+    tq['NPL'] = 1;
+
+    tq['AM-II'] = 1;
+    tq['AP-II'] = 1;
+    tq['AC-II'] = 1;
+    tq['ED'] = 1;
+    tq['SPA'] = 1;
+    tq['CS'] = 1;
+
+    var atq = 0;
+
+    for (let key of subSet.keys()) {
+      if (tq[key])
+        atq = atq + tq[key] * subCountMap.get(key);
+      console.log(key);
+      console.log(tq[key] * subCountMap.get(key));
+    }
+    for (let key of practSet.keys()) {
+      if (tq[key])
+        atq = atq + tq[key] * practCountMap.get(key);
+      console.log(key);
+      console.log(tq[key] * practCountMap.get(key));
+    }
+
+    var a = parseInt(document.getElementById("inputTheoryCond").value);
+    var b = parseInt(document.getElementById("inputPracsCond").value);
+
+    if (a == 0 && b == 0)
+      atq = 0;
+    else
+      atq = atq / (a + b);
+
+    console.log("atq is " + atq);
+
+    document.getElementById("Rscore").innerHTML = Q * atq;
+
+    var table2 = document.createElement('table');
+    table2.setAttribute('class', 'table table-bordered table-inverse datatable');
+
+    var tableHead = document.createElement('THEAD');
+    table2.appendChild(tableHead);
+    var tr = document.createElement('TR');
+    tr.innerHTML = '<th>Total Theory Assigned</th><th>Total Pracs Assigned</th><th>Total Project Assigned</th>'
+    tableHead.appendChild(tr);
+    table2.appendChild(tableHead);
+
+    var tableBody = document.createElement('TBODY');
+    table2.appendChild(tableBody);
+    var tr = document.createElement('TR');
+    tableBody.appendChild(tr);
+    var td = document.createElement('TD');
+    if (($('#inputTheoryAssn').val()) == "") {
+      td.innerHTML = 0;
+    } else {
+      td.innerHTML = ($('#inputTheoryAssn').val());
+    }
+    tr.appendChild(td);
+    var td = document.createElement('TD');
+    if ($('#inputPracsAssn').val() == "") {
+      td.innerHTML = 0;
+    } else {
+      td.innerHTML = ($('#inputPracsAssn').val());
+    }
+    tr.appendChild(td);
+    var td = document.createElement('TD');
+    td.innerHTML = (PLANEDHRS);
+    tr.appendChild(td);
+
+    tgen.appendChild(table2);
+
+    var br = document.createElement('br');
+    tgen.appendChild(br);
+
+    var backtoproj = document.createElement("INPUT");
+    backtoproj.setAttribute('type', 'submit');
+    backtoproj.style.align = "center";
+    backtoproj.setAttribute('value', 'Back to Project');
+    backtoproj.setAttribute('id', 'backtoprojbtn');
+    backtoproj.setAttribute('onclick', 'backtoproj()');
+    backtoproj.setAttribute('class', 'btn btn-success btn-lg');
+    tgen.appendChild(backtoproj);
   }
-  if (majoravg > 0)
-    majoravg /= parseInt($("#numberofmajor").val());
-
-  $("#attnmini").html(miniavg);
-  $("#attnminor").html(minoravg);
-  $("#attnmajor").html(majoravg);
-
-  $("#perat3").html((miniavg + minoravg + majoravg) / 3);
-  if (document.getElementById("perat3").innerHTML == 0 || document.getElementById("perat3").innerHTML == 'NaN')
-    document.getElementById("perat3").innerHTML = 100;
-
-  var A = (parseFloat($("#perat1").text()) * 0.55) + (parseFloat($("#perat2").text()) * 0.3) + (parseFloat($("#perat3").text()) * 0.15);
-  $(".A-val").html(A);
-
-  var PLANEDHRS = (parseInt($('#mini-input-planned').val()) + parseInt($('#minor-input-planned').val()) + parseInt($('#major-input-planned').val())); /*total project hours calculation*/
-  // var PLANEDHRS = parseFloat($("#total3").text())
-  var part1 = (parseFloat($('#total1').text()) / (parseFloat($('#inputTheoryAssn').val())));
-  if (!(part1 > 0) || part1 == 'Infinity') {
-    part1 = 1;
-  }
-  var part2 = (parseFloat($('#total2').text()) / parseFloat($('#inputPracsAssn').val()));
-  if (!(part2 > 0) || part2 == 'Infinity') {
-    part2 = 1;
-  }
-  var part3 = (parseFloat($('#total3').text()) / PLANEDHRS);
-  if (!(part3 > 0) || part3 == 'Infinity') {
-    part3 = 1;
-  }
-
-  var PS1 = (part1 * 50);
-  var PS2 = (part2 * 30);
-  var PS3 = (part3 * 20);
-  var PS = PS1 + PS2 + PS3;
-  var Q = (PS * A) / 100;
-  console.log("PS" + PS1);
-  console.log("PS" + PS2);
-  console.log("PS" + PS3);
-  // var allSubjects { PDS: "value1", HMI: "value2", DWM: "", ML: "", BDA: "", DF: "", CCL: ""};
-  // console.log(allSubjects[PDS]);
-
-  // var avgTnessQtnt;
-  // var R = PS * avgTnessQtnt;
-  document.getElementById("Pscore").innerHTML = PS;
-  document.getElementById("Qscore").innerHTML = Q;
-  // $("#Pscore").html(PS);
-  // $("#Qscore").html(Q);
-  // $("#Rscore").html(R);
-
-  var tq = new Map();
-
-  tq['PDS'] = 1;
-  tq['HMI'] = 0.9;
-  tq['DWM'] = 1;
-  tq['ML'] = 1.1;
-  tq['BDA'] = 1;
-  tq['DF'] = 1;
-  tq['CCL'] = 1.1;
-
-  tq['AM-IV'] = 1.1;
-  tq['AOA'] = 1.1;
-  tq['COA'] = 1;
-  tq['CG'] = 1;
-  tq['OS'] = 1;
-  tq['OSTL'] = 1;
-
-  tq['SPCC'] = 1.1;
-  tq['MCC'] = 1;
-  tq['DD'] = 1;
-  tq['SE'] = 1;
-  tq['OR'] = 1;
-  tq['SPM'] = 0.9;
-  tq['FR'] = 0.9;
-  tq['NPL'] = 1;
-
-  tq['AM-II']=1;
-  tq['AP-II']=1;
-  tq['AC-II']=1;
-  tq['ED']=1;
-  tq['SPA']=1;
-  tq['CS']=1;
-
-  var atq = 0;
-
-  for (let key of subSet.keys()) {
-    if (tq[key])
-      atq = atq + tq[key] * subCountMap.get(key);
-    console.log(key);
-    console.log(tq[key] * subCountMap.get(key));
-  }
-  for (let key of practSet.keys()) {
-    if (tq[key])
-      atq = atq + tq[key] * practCountMap.get(key);
-    console.log(key);
-    console.log(tq[key] * practCountMap.get(key));
-  }
-
-  var a = parseInt(document.getElementById("inputTheoryCond").value);
-  var b = parseInt(document.getElementById("inputPracsCond").value);
-
-  if (a == 0 && b == 0)
-    atq = 0;
-  else
-    atq = atq / (a + b);
-
-  console.log("atq is " + atq);
-
-  document.getElementById("Rscore").innerHTML = PS * atq;
-
-  /*******************************************************************************
-   *******************************************************************************/
-
-
-
 }
+
 /*
  ██████  ███████ ███    ██ ███████ ██████   █████  ████████ ███████     ██████  ██████   █████   ██████ ████████ ███████
 ██       ██      ████   ██ ██      ██   ██ ██   ██    ██    ██          ██   ██ ██   ██ ██   ██ ██         ██    ██
@@ -2512,4 +2562,18 @@ function bToPracs() {
 function btoTheory() {
   $('#myPractDisplay').css('display', 'none');
   $('.theorySection').css('display', 'block');
+}
+
+function backtoproj() {
+  $('#tablegenerated').css('display', 'none');
+  $('#myProjectDisplay').css('display', 'block');
+  if ($('.table-btns').css('display') != 'block') {
+    $('.table-btns').css('display', 'block');
+  }
+  if ($('#backToPracs').css('display') != 'initial') {
+    $('#backToPracs').css('display', 'initial');
+  }
+  if ($('#generateTableFinal').css('display') != 'initial') {
+    $('#generateTableFinal').css('display', 'initial');
+  }
 }
