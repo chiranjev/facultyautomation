@@ -836,7 +836,7 @@ function generateTable() {
         td.setAttribute('id', key + days[i]);
         for (var keyVal of practMap.keys()) {
           if (keyVal == td.id) {
-            td.innerHTML = practMap.get(keyVal);
+            td.innerHTML = practMap.get(keyVal)*2;
           }
         }
         // td.innerHTML=key+days[i];
@@ -1541,7 +1541,7 @@ function generateTable() {
     if (!(part1 > 0) || part1 == 'Infinity') {
       part1 = 1;
     }
-    var part2 = (parseFloat($('#total2').text()) / parseFloat($('#inputPracsAssn').val()));
+    var part2 = (parseFloat($('#total2').text()) / parseFloat($('#inputPracsAssn').val()*2));
     if (!(part2 > 0) || part2 == 'Infinity') {
       part2 = 1;
     }
@@ -1654,7 +1654,7 @@ function generateTable() {
     if ($('#inputPracsAssn').val() == "") {
       td.innerHTML = 0;
     } else {
-      td.innerHTML = ($('#inputPracsAssn').val());
+      td.innerHTML = ($('#inputPracsAssn').val()*2);
     }
     tr.appendChild(td);
     var td = document.createElement('TD');
