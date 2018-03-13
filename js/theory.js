@@ -1587,6 +1587,13 @@ function generateTable() {
   tq['FR'] = 0.9;
   tq['NPL'] = 1;
 
+  tq['AM-II']=1;
+  tq['AP-II']=1;
+  tq['AC-II']=1;
+  tq['ED']=1;
+  tq['SPA']=1;
+  tq['CS']=1;
+
   var atq = 0;
 
   for (let key of subSet.keys()) {
