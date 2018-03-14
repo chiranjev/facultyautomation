@@ -1,5 +1,5 @@
 var ptr = 0;
-
+var electcounter=0;
 /*
  ██████  ███████ ███    ██ ███████ ██████   █████  ████████ ███████     ████████ ██   ██ ███████  ██████  ██████  ██    ██
 ██       ██      ████   ██ ██      ██   ██ ██   ██    ██    ██             ██    ██   ██ ██      ██    ██ ██   ██  ██  ██
@@ -670,6 +670,9 @@ function generateTable() {
         practCountMap.set(subjectname.value, subctr);
       }
 
+      console.log("practcountmap is ");
+      console.log(practCountMap);
+
 
       if (!practMap.get(subjectname.value + dayPractical.value)) {
         counter = 1;
@@ -688,6 +691,15 @@ function generateTable() {
       // else
       //    practMap.set  (subjectname.value,subMap.get(subjectname.value)+1);
     }
+
+    for (var key of practCountMap.keys())
+    {
+      if (key == 'or' || key == 'spm' || key == 'fr' || key == 'ml' || key == 'bda' || key == 'df' || key == 'am-IV')
+            electcounter+=practCountMap.get(key);
+    }
+
+    console.log("electcounter is "+electcounter);
+
 
     // console.log("practs: : "+practs);
     // console.log("name: "+name);
@@ -771,7 +783,7 @@ function generateTable() {
 
     for (let key of practSet.keys()) {
       var td = document.createElement('td');
-      td.innerHTML = key;
+      td.innerHTML = key.toUpperCase();
       tr.appendChild(td);
       console.log("practname is " + key);
     }
@@ -836,7 +848,10 @@ function generateTable() {
         td.setAttribute('id', key + days[i]);
         for (var keyVal of practMap.keys()) {
           if (keyVal == td.id) {
-            td.innerHTML = practMap.get(keyVal)*2;
+            if (key == 'or' || key == 'spm' || key == 'fr' || key == 'ml' || key == 'bda' || key == 'df' || key == 'am-IV')
+                  td.innerHTML = practMap.get(keyVal);
+            else
+            td.innerHTML = practMap.get(keyVal) * 2;
           }
         }
         // td.innerHTML=key+days[i];
@@ -1120,10 +1135,10 @@ function generateTable() {
       ctr++;
       var arraynew = "0";
       // $("#ttl"+ctr).innerHTML = "0";
-      $("#ttl" + ctr).html("0");
+      // $("#ttl" + ctr).html("0");
       ctr++;
       var arraynew = 0;
-      $("#ttl" + ctr).html("0");
+      // $("#ttl" + ctr).html("0");
     } else if (parseInt(subjectList.size) == 1) {
       for (let key of subjectList.keys()) {
         var arraynew = 0;
@@ -1137,7 +1152,7 @@ function generateTable() {
       }
       ctr++;
       var arraynew = 0;
-      $("#ttl" + ctr).html("0");
+      // $("#ttl" + ctr).html("0");
     } else {
       for (let key of subjectList.keys()) {
         var arraynew = 0;
@@ -1173,9 +1188,11 @@ function generateTable() {
     // for theory final
     var total1 = 0;
     var tot1 = ctr;
-    for (var i = 0; i < ctr; i++) {
+    for (var i = 0; i <= ctr; i++) {
+      if($("#ttl" + (i + 1)).text())
       total1 += parseInt($("#ttl" + (i + 1)).text());
     }
+    console.log("tot1"+ctr);
     if (total1 == 0)
       total1 = 100;
     $("#total1").html(total1);
@@ -1184,10 +1201,10 @@ function generateTable() {
     if (parseInt(practicalList.size) == 0) {
       ctr++;
       var arraynew = 0;
-      $("#ttl" + ctr).html("0");
+      // $("#ttl" + ctr).html("0");
       ctr++;
       var arraynew = 0;
-      $("#ttl" + ctr).html("0");
+      // $("#ttl" + ctr).html("0");
     } else if (parseInt(practicalList.size) == 1) {
       for (let key of practicalList.keys()) {
         var arraynew = 0;
@@ -1201,7 +1218,7 @@ function generateTable() {
       }
       ctr++;
       var arraynew = 0;
-      $("#ttl" + ctr).html("0");
+      // $("#ttl" + ctr).html("0");
     } else {
       for (let key of practicalList.keys()) {
         var arraynew = 0;
@@ -1221,6 +1238,7 @@ function generateTable() {
     // for practical final
     var total2 = 0;
     for (var i = tot1; i < ctr; i++) {
+      if($("#ttl" + (i + 1)).text())
       total2 += parseInt($("#ttl" + (i + 1)).text());
     }
     if (total2 == 0)
@@ -1370,11 +1388,11 @@ function generateTable() {
 
     if (parseInt(subAttnMap.size) == 0) {
       var attnele = document.getElementById("attperc" + m);
-      attnele.innerHTML = 0;
+      // attnele.innerHTML = 0;
       m++;
       attnele.setAttribute("id", "attn" + "perc1");
       var attnele = document.getElementById("attperc" + m);
-      attnele.innerHTML = 0;
+      // attnele.innerHTML = 0;
       m++;
       attnele.setAttribute("id", "attn" + "perc2");
     } else if (parseInt(subAttnMap.size) == 1) {
@@ -1385,7 +1403,7 @@ function generateTable() {
         attnele.setAttribute("id", "attnsub" + keyVal);
       }
       var attnele = document.getElementById("attperc" + m);
-      attnele.innerHTML = 0;
+      // attnele.innerHTML = 0;
       m++;
       attnele.setAttribute("id", "attn" + "perc1");
     } else {
@@ -1404,12 +1422,12 @@ function generateTable() {
     // }
     if (parseInt(practAttnMap.size) == 0) {
       var attnele = document.getElementById("attperc" + m);
-      attnele.innerHTML = 0;
+      // attnele.innerHTML = 0;
       m++;
       attnele.setAttribute("id", "attn" + "perc" + m);
-      attnele.innerHTML = 0;
+      // attnele.innerHTML = 0;
       var attnele = document.getElementById("attperc" + m);
-      attnele.innerHTML = 0;
+      // attnele.innerHTML = 0;
       m++;
       attnele.setAttribute("id", "attn" + "perc" + m);
     } else if (parseInt(practAttnMap.size) == 1) {
@@ -1420,7 +1438,7 @@ function generateTable() {
         attnele.setAttribute("id", "attnpract" + keyVal);
       }
       var attnele = document.getElementById("attperc" + m);
-      attnele.innerHTML = 0;
+      // attnele.innerHTML = 0;
       m++;
       attnele.setAttribute("id", "attn" + "perc" + m);
     } else {
@@ -1528,20 +1546,29 @@ function generateTable() {
     $("#attnminor").html(minoravg);
     $("#attnmajor").html(majoravg);
 
+    if(miniavg == 0)
+      miniavg = 100;
+    if(minoravg == 0)
+      minoravg = 100;
+    if(majoravg == 0)
+      majoravg = 100;
+
     $("#perat3").html((miniavg + minoravg + majoravg) / 3);
+
     if (document.getElementById("perat3").innerHTML == 0 || document.getElementById("perat3").innerHTML == 'NaN')
       document.getElementById("perat3").innerHTML = 100;
 
     var A = (parseFloat($("#perat1").text()) * 0.55) + (parseFloat($("#perat2").text()) * 0.3) + (parseFloat($("#perat3").text()) * 0.15);
     $(".A-val").html(A);
 
-    var PLANEDHRS = (parseFloat($('#mini-input-planned').val()) + parseFloat($('#minor-input-planned').val()) + parseFloat($('#major-input-planned').val())); /*total project hours calculation*/
+    /*total project hours calculation*/
+    var PLANEDHRS = (parseFloat($('#mini-input-planned').val()) + parseFloat($('#minor-input-planned').val()) + parseFloat($('#major-input-planned').val()));
     // var PLANEDHRS = parseFloat($("#total3").text())
     var part1 = (parseFloat($('#total1').text()) / (parseFloat($('#inputTheoryAssn').val())));
     if (!(part1 > 0) || part1 == 'Infinity') {
       part1 = 1;
     }
-    var part2 = (parseFloat($('#total2').text()) / parseFloat($('#inputPracsAssn').val()*2));
+    var part2 = (parseFloat($('#total2').text()) / parseFloat($('#inputPracsAssn').val() * 2-electcounter));
     if (!(part2 > 0) || part2 == 'Infinity') {
       part2 = 1;
     }
@@ -1601,6 +1628,37 @@ function generateTable() {
     tq['ED'] = 1;
     tq['SPA'] = 1;
     tq['CS'] = 1;
+    //for pracs
+    tq['pds'] = 1;
+    tq['hmi'] = 0.9;
+    tq['dwm'] = 1;
+    tq['ml'] = 1.1;
+    tq['bda'] = 1;
+    tq['df'] = 1;
+    tq['ccl'] = 1.1;
+
+    tq['am-IV'] = 1.1;
+    tq['aoa'] = 1.1;
+    tq['coa'] = 1;
+    tq['cg'] = 1;
+    tq['os'] = 1;
+    tq['ostl'] = 1;
+
+    tq['spcc'] = 1.1;
+    tq['mcc'] = 1;
+    tq['dd'] = 1;
+    tq['se'] = 1;
+    tq['or'] = 1;
+    tq['spm'] = 0.9;
+    tq['fr'] = 0.9;
+    tq['npl'] = 1;
+
+    tq['am-II'] = 1;
+    tq['ap-II'] = 1;
+    tq['ac-II'] = 1;
+    tq['ed'] = 1;
+    tq['spa'] = 1;
+    tq['cs'] = 1;
 
     var atq = 0;
 
@@ -1620,22 +1678,26 @@ function generateTable() {
     var a = parseInt(document.getElementById("inputTheoryCond").value);
     var b = parseInt(document.getElementById("inputPracsCond").value);
 
-    if (a == 0 && b == 0)
-      atq = 0;
-    else
+    if (a == 0 && b == 0 || isNaN(a) && isNaN(b))
+      atq = 1;
+    else {
+      if (isNaN(a) && (!isNaN(b) || b==0))
+        a = 0;
+      if (isNaN(b) && (!isNaN(a) || a==0))
+        b = 0;
       atq = atq / (a + b);
-
+    }
     console.log("atq is " + atq);
 
     document.getElementById("Rscore").innerHTML = Q * atq;
 
     var table2 = document.createElement('table');
-    table2.setAttribute('class', 'table table-bordered table-inverse datatable');
+    table2.setAttribute('class', 'table table-bordered table-inverse datatable text-center');
 
     var tableHead = document.createElement('THEAD');
     table2.appendChild(tableHead);
     var tr = document.createElement('TR');
-    tr.innerHTML = '<th>Total Theory Assigned</th><th>Total Pracs Assigned</th><th>Total Project Assigned</th>'
+    tr.innerHTML = '<th class="text-center">Total hours of Theory Assigned</th><th class="text-center">Total hours of Pracs Assigned</th><th class="text-center">Total hours of Project Assigned</th>'
     tableHead.appendChild(tr);
     table2.appendChild(tableHead);
 
@@ -1654,7 +1716,7 @@ function generateTable() {
     if ($('#inputPracsAssn').val() == "") {
       td.innerHTML = 0;
     } else {
-      td.innerHTML = ($('#inputPracsAssn').val()*2);
+      td.innerHTML = $('#inputPracsAssn').val() * 2-electcounter;
     }
     tr.appendChild(td);
     var td = document.createElement('TD');
@@ -1672,7 +1734,7 @@ function generateTable() {
     backtoproj.setAttribute('value', 'Back to Project');
     backtoproj.setAttribute('id', 'backtoprojbtn');
     backtoproj.setAttribute('onclick', 'backtoproj()');
-    backtoproj.setAttribute('class', 'btn btn-success btn-lg');
+    backtoproj.setAttribute('class', 'btn btn-success btn-lg text-center');
     tgen.appendChild(backtoproj);
   }
 }
@@ -1869,13 +1931,13 @@ function setPracts(s) {
   subject.innerHTML = "";
   // console.log(subject);
   if (year.value == 'FE')
-    var practlist = ['AM', 'AP', 'AC', 'ED', 'SPA', 'CS'];
+    var practlist = ['am', 'ap', 'ac', 'ed', 'spa', 'cs'];
   else if (year.value == 'SE')
-    var practlist = ['AM-IV', 'AOA', 'COA', 'OS', 'OSTL', 'CG'];
+    var practlist = ['am-IV', 'aoa', 'coa', 'os', 'ostl', 'cg'];
   else if (year.value == 'TE')
-    var practlist = ['SPCC', 'SE', 'DD', 'MCC', 'NPL', 'SPM', 'OR', 'FR'];
+    var practlist = ['spcc', 'se', 'dd', 'mcc', 'npl', 'spm', 'or', 'fr'];
   else if (year.value == 'BE')
-    var practlist = ['DWM', 'HMI', 'PDS', 'CCL', 'ML', 'BDA', 'DF'];
+    var practlist = ['dwm', 'hmi', 'pds', 'ccl', 'ml', 'bda', 'df'];
   // console.log(year);
   // console.log(sublist);
   var subjects = document.getElementsByClassName("practs");
@@ -1884,7 +1946,7 @@ function setPracts(s) {
     // console.log(sub);
     var subject = document.createElement('option');
     subject.value = practlist[sub];
-    subject.text = practlist[sub];
+    subject.text = practlist[sub].toUpperCase();
     subjects[classname - 1500].add(subject);
   }
 }
@@ -1893,13 +1955,13 @@ function getAttendancePracs(attn) {
   var classname = attn.classList[0];
   // console.log("classname: "+classname);
   classname = classname - 5000;
-  console.log("classname: " + classname);
+  console.log("Pracs classname: " + classname);
   var select = document.getElementsByClassName("practs");
-  console.log("select: " + select.value);
+  console.log("Pracs select: " + select.value);
   var subject = select[classname];
-  console.log("subject: " + subject);
+  console.log("Pracs subject: " + subject);
 
-  if (subject.value == 'OR' || subject.value == 'SPM' || subject.value == 'FR' || subject.value == 'ML' || subject.value == 'BDA' || subject.value == 'DF') {
+  if (subject.value == 'or' || subject.value == 'spm' || subject.value == 'fr' || subject.value == 'ml' || subject.value == 'bda' || subject.value == 'df') {
     var attend = new Map();
     attend['ortea'] = 7;
     attend['orteb'] = 7;
