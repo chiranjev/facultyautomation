@@ -40,8 +40,6 @@ function generate() {
     var th5 = document.createElement('th');
     th5.innerHTML = "<b>Attendance</b>";
     // th5.setAttribute('value','Attendance');
-    var th55 = document.createElement('th');
-    th55.innerHTML = "<b>Total students</b>";
     var th6 = document.createElement('th');
     th6.innerHTML = "<b>Attendance Percentage</b>";
     // th6.setAttribute('value','Count');
@@ -52,7 +50,7 @@ function generate() {
     tr.appendChild(th37);
     tr.appendChild(th4);
     tr.appendChild(th5);
-    tr.appendChild(th55);
+    tr.appendChild(th6);
     tr.appendChild(th6);
     thead.appendChild(tr);
     table.appendChild(thead);
@@ -101,7 +99,6 @@ function generate() {
       //td35.setAttribute('class',300+i-1);
       var section = document.createElement("SELECT");
       section.setAttribute('class', 'section');
-      section.setAttribute('onchange', "setTotalStudents(this)");
       var option = document.createElement("option");
       option.text = "A";
       option.value = "A";
@@ -153,14 +150,6 @@ function generate() {
       attn.setAttribute('id', "inputTheory");
       attn.setAttribute("onkeyup", "getAttendance(this)");
       td5.appendChild(attn);
-
-      var td55 = document.createElement('td');
-      td55.setAttribute('id', 30000+i-1);
-      var percentage = document.createElement('INPUT');
-      percentage.setAttribute('type', "number");
-      td55.appendChild(percentage);
-      td55.innerHTML = "0";
-
       var td6 = document.createElement('td');
       var percentage = document.createElement('INPUT');
       percentage.setAttribute('type', "number");
@@ -176,7 +165,7 @@ function generate() {
       tr.appendChild(td38);
       tr.appendChild(td4);
       tr.appendChild(td5);
-      tr.appendChild(td55);
+      tr.appendChild(td6);
       tr.appendChild(td6);
       table.appendChild(tr);
     }
@@ -387,8 +376,6 @@ function getAttendance(attn) {
   var select = document.getElementsByClassName("subjects");
   var subject = select[classname];
 
-  var totalStudents=document.getElementById(classname+30000);
-
   if (subject.value == 'OR' || subject.value == 'SPM' || subject.value == 'FR' || subject.value == 'ML' || subject.value == 'BDA' || subject.value == 'DF') {
     var attend = new Map();
     attend['ortea'] = 7;
@@ -433,7 +420,6 @@ function getAttendance(attn) {
     // console.log("count"+count);
     // console.log("attncname"+attn[classname]);
     count.innerHTML = curattn / attend[data] * 100;
-    totalStudents.innerHTML=attend[data];
     // var sub = document.getElementsByClassName(classn - 100)[0].value;
     // console.log(sub);
     // // console.log(typeof(sub));
@@ -484,7 +470,6 @@ function getAttendance(attn) {
     // console.log("count"+count);
     // console.log("attncname"+attn[classname]);
     count.innerHTML = curattn / attend[classname] * 100;
-    totalStudents.innerHTML=attend[classname];
   }
 }
 
