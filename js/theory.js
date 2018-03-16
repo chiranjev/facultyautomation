@@ -1788,6 +1788,9 @@ function generatePracs() {
     var th5 = document.createElement('th');
     th5.innerHTML = "<b>Attendance</b>";
     // th5.setAttribute('value','Attendance');
+    var th55 = document.createElement('th');
+    th55.innerHTML = "<b>Total students</b>";
+
     var th6 = document.createElement('th');
     th6.innerHTML = "<b>Count</b>";
     // th6.setAttribute('value','Count');
@@ -1798,7 +1801,7 @@ function generatePracs() {
     tr.appendChild(th37);
     tr.appendChild(th4);
     tr.appendChild(th5);
-    tr.appendChild(th6);
+    tr.appendChild(th55);
     tr.appendChild(th6);
     thead.appendChild(tr);
     table.appendChild(thead);
@@ -1902,6 +1905,14 @@ function generatePracs() {
       attn.setAttribute("onkeyup", "getAttendancePracs(this)");
       attn.setAttribute("id", "inputPractical");
       td5.appendChild(attn);
+
+      var td55 = document.createElement('td');
+      td55.setAttribute('id', 40000+i-1);
+      var percentage = document.createElement('INPUT');
+      percentage.setAttribute('type', "number");
+      td55.appendChild(percentage);
+      td55.innerHTML = "0";
+
       var td6 = document.createElement('td');
       var percentage = document.createElement('INPUT');
       percentage.setAttribute('type', "number");
@@ -1913,7 +1924,7 @@ function generatePracs() {
       tr.appendChild(td38);
       tr.appendChild(td4);
       tr.appendChild(td5);
-      tr.appendChild(td6);
+      tr.appendChild(td55);
       tr.appendChild(td6);
       table.appendChild(tr);
     }
@@ -1972,11 +1983,14 @@ function getAttendancePracs(attn) {
   var classname = attn.classList[0];
   // console.log("classname: "+classname);
   classname = classname - 5000;
+
   console.log("Pracs classname: " + classname);
   var select = document.getElementsByClassName("practs");
   console.log("Pracs select: " + select.value);
   var subject = select[classname];
   console.log("Pracs subject: " + subject);
+
+  var totalStudents=document.getElementById(classname+40000);
 
   if (subject.value == 'or' || subject.value == 'spm' || subject.value == 'fr' || subject.value == 'ml' || subject.value == 'bda' || subject.value == 'df') {
     var attend = new Map();
@@ -2022,7 +2036,7 @@ function getAttendancePracs(attn) {
     // console.log("count"+count);
     // console.log("attncname"+attn[classname]);
     count.innerHTML = curattn / attend[data] * 100;
-
+    totalStudents.innerHTML=attend[data];
   } else {
 
     var attend = new Map();
@@ -2062,6 +2076,7 @@ function getAttendancePracs(attn) {
     // console.log(count);
     // console.log(attn[classname]);
     count.innerHTML = curattn / attend[classname] * 100;
+    totalStudents.innerHTML=attend[classname];
   }
 }
 
